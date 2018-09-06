@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-
 <?import com.codecool.citySim.model.roads.Road?>
 <?import javafx.scene.shape.QuadCurve?>
+
 <Pane fx:id="pane" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       layoutX="640" layoutY="360">
-      <Road fx:id="horizontalRight" startX="-640" endX="640" startY="-8" endY="-8" />
-      <Road fx:id="horizontalLeft" startX="640" endX="-640" startY="8" endY="8" />
-      <Road fx:id="verticalDown" startX="-8" endX="-8" startY="-360" endY="360" />
-      <Road fx:id="verticalUp" startX="8" endX="8" startY="360" endY="-360"/>
+      <!-- Horizontal roads-->
+      <Road fx:id="horizontalRightFirst" startX="-640" endX="-16" startY="8" endY="8" />
+      <Road fx:id="horizontalRightSecond" startX="16" endX="640" startY="8" endY="8" />
+      <Road fx:id="horizontalLeftFirst" startX="640" endX="16" startY="-8" endY="-8" />
+      <Road fx:id="horizontalLeftSecond" startX="-16" endX="-640" startY="-8" endY="-8" />
+
+      <!-- Vertical roads-->
+      <Road fx:id="verticalDownFirst" startX="-8" endX="-8" startY="-360" endY="-16" />
+      <Road fx:id="verticalDownSecond" startX="-8" endX="-8" startY="16" endY="360" />
+      <Road fx:id="verticalUpFirst" startX="8" endX="8" startY="360" endY="16"/>
+      <Road fx:id="verticalUpSecond" startX="8" endX="8" startY="-16" endY="-360"/>
+
+      <!-- Crossroad -->
       <QuadCurve fx:id="kurva" startX="-8" endX="-16" startY="16" endY="8" controlX="-8" controlY="8" style="-fx-border-width: 10" />
 </Pane>

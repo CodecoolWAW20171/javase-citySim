@@ -13,21 +13,21 @@ import java.util.ResourceBundle;
 public class CitySimPaneController implements Initializable {
     @FXML
     public Pane pane;
-    public Road horizontalLeft;
-    public Road horizontalRight;
-    public Road verticalUp;
-    public Road verticalDown;
+    public Road horizontalRightFirst;
+    public Road horizontalRightSecond;
+    public Road horizontalLeftFirst;
+    public Road horizontalLeftSecond;
+    public Road verticalDownFirst;
+    public Road verticalDownSecond;
+    public Road verticalUpFirst;
+    public Road verticalUpSecond;
     public QuadCurve kurva;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Car car = new Car(3, -360);
-        Car car1 = new Car(-13, -360);
-        Car car2 = new Car(3, -240);
-        Car car3 = new Car(-13, -240);
+        Car car = new Car(-360, 8);
+        car.setRotate(90);
         pane.getChildren().add(car);
-        pane.getChildren().add(car1);
-        pane.getChildren().add(car2);
-        pane.getChildren().add(car3);
+
     }
 }
