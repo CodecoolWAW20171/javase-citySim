@@ -16,27 +16,27 @@ public class CitySimPaneController implements Initializable {
 
     public Road horizontalRightFirst;
     public Road horizontalRightSecond;
-    public Road horizontalLeftFirst;
-    public Road horizontalLeftSecond;
-    public Road verticalDownFirst;
-    public Road verticalDownSecond;
-    public Road verticalUpFirst;
-    public Road verticalUpSecond;
     public QuadCurve leftRightTurn;
     public QuadCurve leftLeftTurn;
     public Road leftStraight;
 
+    public Road horizontalLeftFirst;
+    public Road horizontalLeftSecond;
     public QuadCurve rightRightTurn;
     public QuadCurve rightLeftTurn;
     public Road rightStraight;
 
-    public QuadCurve upRightTurn;
-    public QuadCurve upLeftTurn;
-    public Road upStraight;
-
+    public Road verticalDownFirst;
+    public Road verticalDownSecond;
     public QuadCurve downRightTurn;
     public QuadCurve downLeftTurn;
     public Road downStraight;
+
+    public Road verticalUpFirst;
+    public Road verticalUpSecond;
+    public QuadCurve upRightTurn;
+    public QuadCurve upLeftTurn;
+    public Road upStraight;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
