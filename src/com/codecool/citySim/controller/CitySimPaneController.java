@@ -1,5 +1,6 @@
 package com.codecool.citySim.controller;
 
+import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.roads.Road;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,14 +12,15 @@ import java.util.ResourceBundle;
 public class CitySimPaneController implements Initializable {
     @FXML
     public Pane pane;
-    public Road road;
+    public Road horizontalLeft;
+    public Road horizontalRight;
+    public Road verticalUp;
+    public Road verticalDown;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        road.setStartX(0);
-        road.setStartY(360);
-        road.setEndX(1280);
-        road.setEndY(360);
-        road.prefWidth(150);
+        Car car = new Car();
+        pane.getChildren().add(car);
+        System.out.println(verticalUp.getEndX() + " " + verticalUp.getStartY());
     }
 }
