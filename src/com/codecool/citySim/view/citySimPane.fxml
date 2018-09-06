@@ -9,7 +9,7 @@
       layoutX="640" layoutY="360">
 
       <!-- Horizontal roads-->
-      <Road fx:id="horizontalRightFirst" startX="-640" endX="-16" startY="8" endY="8" />
+      <Road fx:id="horizontalRightFirst" startX="-640" endX="-16" startY="8" endY="8"/>
       <Road fx:id="horizontalRightSecond" startX="16" endX="640" startY="8" endY="8" />
       <Road fx:id="horizontalLeftFirst" startX="640" endX="16" startY="-8" endY="-8" />
       <Road fx:id="horizontalLeftSecond" startX="-16" endX="-640" startY="-8" endY="-8" />
@@ -21,20 +21,20 @@
       <Road fx:id="verticalUpSecond" startX="8" endX="8" startY="-16" endY="-360"/>
 
       <!-- Crossroad -->
-      <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7" />
-      <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7" />
-      <Road fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8" />
+      <!--<QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7" />-->
+      <!--<QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7" />-->
+      <!--<Road fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8" />-->
 
-      <QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7" />
-      <QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7" />
-      <Road fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
+      <!--<QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7" />-->
+      <!--<QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7" />-->
+      <!--<Road fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />-->
 
       <QuadCurve fx:id="upRightTurn" startX="8" endX="16" startY="16" endY="8" controlX="7" controlY="7" />
       <QuadCurve fx:id="upLeftTurn" startX="8" endX="-16" startY="16" endY="-8" controlX="7" controlY="-7" />
       <Road fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
 
-      <QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7" />
-      <QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7" />
-      <Road fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />
+      <!--<QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7" />-->
+      <!--<QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7" />-->
+      <!--<Road fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />-->
 
 </Pane>
