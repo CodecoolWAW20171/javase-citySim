@@ -13,11 +13,26 @@ import java.util.ResourceBundle;
 public class CitySimPaneController implements Initializable {
     @FXML
     public Pane pane;
+
     public Road horizontalLeft;
+    public QuadCurve leftRightTurn;
+    public QuadCurve leftLeftTurn;
+    public Road leftStraight;
+
     public Road horizontalRight;
+    public QuadCurve rightRightTurn;
+    public QuadCurve rightLeftTurn;
+    public Road rightStraight;
+
     public Road verticalUp;
+    public QuadCurve upRightTurn;
+    public QuadCurve upLeftTurn;
+    public Road upStraight;
+
     public Road verticalDown;
-    public QuadCurve kurva;
+    public QuadCurve downRightTurn;
+    public QuadCurve downLeftTurn;
+    public Road downStraight;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
