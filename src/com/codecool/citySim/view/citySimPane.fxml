@@ -4,9 +4,10 @@
 
 <?import com.codecool.citySim.model.roads.Road?>
 <Pane fx:id="pane" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController">
-      <Road fx:id="horizontalRight" endX="1280" startY="380" endY="380" />
-      <Road fx:id="horizontalLeft" startX="1280" startY="340" endY="340" />
-      <Road fx:id="verticalDown" startX="620" endX="620" endY="720" />
-      <Road fx:id="verticalUp" startX="660" endX="660" startY="720" />
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
+      layoutX="640" layoutY="360">
+      <Road fx:id="horizontalRight" startX="-640" endX="640" startY="-20" endY="-20" />
+      <Road fx:id="horizontalLeft" startX="640" endX="-640" startY="20" endY="20" />
+      <Road fx:id="verticalDown" startX="-20" endX="-20" startY="-360" endY="360" />
+      <Road fx:id="verticalUp" startX="20" endX="20" startY="360" endY="-360"/>
 </Pane>

@@ -19,8 +19,13 @@ public class CitySimPaneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Car car = new Car();
+        Car car = new Car(20, -360);
+        Car car1 = new Car(20, -300);
+        Car car2 = new Car(20, -240);
+        Car car3 = new Car(20, -180);
         pane.getChildren().add(car);
-        System.out.println(verticalUp.getEndX() + " " + verticalUp.getStartY());
+        pane.getChildren().add(car1);
+        pane.getChildren().add(car2);
+        pane.getChildren().add(car3);
     }
 }

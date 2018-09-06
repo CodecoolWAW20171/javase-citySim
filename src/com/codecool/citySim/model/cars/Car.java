@@ -7,10 +7,10 @@ import javafx.scene.image.ImageView;
 
 public class Car extends Vehicle {
 
-    public Car() {
-        this.setImage(new Image("cars/emergencyServices/police.png"));
-        this.setY(700);
-        this.setX(652);
+    public Car(double x, double y) {
+        this.setX(x);
+        this.setY(y);
+        this.setImage(new Image("cars/fast.png"));
     }
 
 
