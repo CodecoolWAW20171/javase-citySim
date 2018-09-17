@@ -1,59 +1,32 @@
 package com.codecool.citySim.model.lights;
 
-public class Light implements Runnable {
+public class Light {
 
-    private boolean isGreenHorizontal;
-    private boolean isGreenVertical;
-    private long timeOfLight;
+    private String id;
+    private boolean isGreen;
+    private boolean isVertical;
 
-    public Light() {
-        setGreenVertical(!isGreenHorizontal());
-        setTimeOfLight(5000);
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            setGreenVertical(!isGreenVertical());
-            setGreenHorizontal(!isGreenHorizontal());
-            try {
-                Thread.sleep(getTimeOfLight());
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public long getTimeOfLight() {
-        return timeOfLight;
+    public boolean isGreen() {
+        return isGreen;
     }
 
-    public void setTimeOfLight(long timeOfLight) {
-        this.timeOfLight = timeOfLight;
+    public void setGreen(boolean green) {
+        isGreen = green;
     }
 
-    public boolean isGreenHorizontal() {
-        return isGreenHorizontal;
+    public boolean isVertical() {
+        return isVertical;
     }
 
-    public void setGreenHorizontal(boolean greenHorizontal) {
-        isGreenHorizontal = greenHorizontal;
-    }
-
-    public boolean isGreenVertical() {
-        return isGreenVertical;
-    }
-
-    public void setGreenVertical(boolean greenVertical) {
-        isGreenVertical = greenVertical;
-    }
-
-    @Override
-    public String toString() {
-        return "Light{" +
-                "isGreenHorizontal=" + isGreenHorizontal() +
-                ", isGreenVertical=" + isGreenVertical() +
-                ", timeOfLight=" + getTimeOfLight() +
-                '}';
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
     }
 }

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.QuadCurve?>
-<?import com.codecool.citySim.model.roads.Road?>
 
-
-<?import javafx.scene.shape.Rectangle?>
-<Pane fx:id="pane" layoutX="640" layoutY="360" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
-      stylesheets="@/css/style.css">
+<?import com.codecool.citySim.model.roads.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.*?>
+<AnchorPane fx:id="pane" layoutX="640" layoutY="360" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
+            stylesheets="@/css/style.css">
 
     <!--Horizontal roads-->
     <Road fx:id="horizontalRightFirst" startX="-640" endX="-16" startY="8" endY="8"/>
@@ -55,4 +53,4 @@
     <Rectangle fx:id="horizontalLightUp" fill="green" translateX="-35" translateY="-25" width="20" height="10"/>
     <Rectangle fx:id="horizontalLightDown" fill="green" translateX="15" translateY="15" width="20" height="10"/>
 
-</Pane>
+</AnchorPane>
