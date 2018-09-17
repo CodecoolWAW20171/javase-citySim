@@ -43,26 +43,9 @@ public class CitySimPaneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Car car = new Car(8, 8);
+        Car car = new Car(-640, 8);
         pane.getChildren().add(car);
-
-        Path path = new Path();
-        MoveTo moveFrom = new MoveTo(-8, 8);
-        path.getElements().add(moveFrom);
-        path.getElements().add(new QuadCurveTo(upLeftTurn.getControlX(), upLeftTurn.getControlY(),
-                upLeftTurn.getEndX(), upLeftTurn.getEndY()));
-        path.getElements().add(new LineTo(-100, -8));
-
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(1000));
-        pathTransition.setNode(car);
-        pathTransition.setPath(path);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(2000), car);
-        translateTransition.setByX(200);
-        translateTransition.play();
-
-        pathTransition.play();
+        VehicleController movingCar = new VehicleController(car, horizontalRightFirst);
+        movingCar.moveTheCar(car, horizontalRightFirst);
     }
 }

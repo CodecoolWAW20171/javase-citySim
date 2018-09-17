@@ -4,10 +4,24 @@ import javafx.scene.image.ImageView;
 
 public abstract class Vehicle extends ImageView {
     protected double speed;
-    protected double maxSpeed;
+    protected int maxSpeed;
     protected int minDist;
     protected double acceleration;
     protected ImageView image;
 
+    public double getSpeed() {
+        return speed;
+    }
 
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
 }
