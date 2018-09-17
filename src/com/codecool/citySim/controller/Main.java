@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../com/codecool/citySim/view/sample.fxml"));
-        primaryStage.setTitle("Test");
-        primaryStage.setScene(new Scene(root, 1920, 1020));
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/citySimPane.fxml"));
+        primaryStage.setTitle("CitySim");
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 
