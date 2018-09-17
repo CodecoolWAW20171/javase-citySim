@@ -7,18 +7,15 @@ public class Light implements Runnable {
     private long timeOfLight;
 
     public Light() {
-        isGreenHorizontal = false;
-        isGreenVertical = true;
+        setGreenVertical(!isGreenHorizontal());
         setTimeOfLight(5000);
     }
 
     @Override
     public void run() {
-        System.out.println(toString());
         while (true) {
             setGreenVertical(!isGreenVertical());
             setGreenHorizontal(!isGreenHorizontal());
-            System.out.println(toString());
             try {
                 Thread.sleep(getTimeOfLight());
             } catch (InterruptedException e) {
