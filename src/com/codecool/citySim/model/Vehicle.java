@@ -24,4 +24,12 @@ public abstract class Vehicle extends ImageView {
     public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
+
+    public int getMinDist() {
+        return minDist;
+    }
+
+    public void setMinDist(int minDist) {
+        this.minDist = minDist;
+    }
 }

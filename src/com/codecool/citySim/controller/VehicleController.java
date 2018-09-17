@@ -2,6 +2,7 @@ package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
+import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
@@ -22,8 +23,8 @@ public class VehicleController {
 
     public void moveTheCar(Vehicle car, Road road) {
         LinkedList<Vehicle> vehiclesList = road.getVehicles();
-        if (vehiclesList.indexOf(car) -1 != -1) {
-            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(car) + 1);
+        if (vehiclesList.indexOf(car) -1 >= 0) {
+            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(car) - 1);
             if (car.getX() == nextVehicle.getX()) {
                 car.setSpeed(Math.abs(Math.abs(car.getX()) - Math.abs(nextVehicle.getX())));
                 if (car.getSpeed() > car.getMaxSpeed()) {
@@ -40,19 +41,31 @@ public class VehicleController {
                 }
             }
         } else {
-            if (Math.abs(car.getX()) == Math.abs(road.getStartX())) {
-                car.setSpeed(Math.abs(Math.abs(car.getY()) - Math.abs(road.getEndY())));
-                if (car.getSpeed() > car.getMaxSpeed()) {
-                    currentSpeed = car.getMaxSpeed();
+            if (car.getX() == road.getStartX() && car.getX() == road.getEndX()) {
+                if (Math.abs(Math.abs(car.getY()) - Math.abs(road.getEndY())) > car.getMaxSpeed()) {
+                    car.setSpeed(Math.abs(Math.abs(car.getY()) - Math.abs(road.getEndY())));
+                    if (car.getSpeed() > car.getMaxSpeed()) {
+                        currentSpeed = car.getMaxSpeed();
+                    } else {
+                        currentSpeed = car.getSpeed();
+                    }
                 } else {
-                    currentSpeed = car.getSpeed();
+                    car.setSpeed(0);
+                    currentSpeed = 0;
                 }
             } else {
-                car.setSpeed(Math.abs(Math.abs(car.getX() - Math.abs(road.getEndX()))));
-                if (car.getSpeed() > car.getMaxSpeed()) {
-                    currentSpeed = car.getMaxSpeed();
+                if (Math.abs(Math.abs(car.getX()) - Math.abs(road.getEndX())) > car.getMaxSpeed()) {
+                    System.out.println(Math.abs(Math.abs(car.getX()) - Math.abs(road.getEndX())));
+                    System.out.println(car.getX());
+                    car.setSpeed(Math.abs(Math.abs(car.getX()) - Math.abs(road.getEndX())));
+                    if (car.getSpeed() > car.getMaxSpeed()) {
+                        currentSpeed = car.getMaxSpeed();
+                    } else {
+                        currentSpeed = car.getSpeed();
+                    }
                 } else {
-                    currentSpeed = car.getSpeed();
+                    car.setSpeed(0);
+                    currentSpeed = 0;
                 }
             }
         }
@@ -70,11 +83,12 @@ public class VehicleController {
                 moveInAStraightLine.setByX(convertSpeedToPixels((int) currentSpeed));
             }
         }
+        moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
         moveInAStraightLine.play();
     }
 
     private double convertSpeedToPixels(int speed) {
-        return Double.parseDouble(String.valueOf(speed / 0.27778));
+        return Double.parseDouble(String.valueOf((speed / 0.27778) / 5));
     }
 
 }
