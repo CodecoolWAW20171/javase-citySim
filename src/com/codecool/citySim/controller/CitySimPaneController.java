@@ -49,10 +49,6 @@ public class CitySimPaneController implements Initializable {
                 movingCar.moveTheCar(car, horizontalRightFirst);
                 try {
                     TimeUnit.MILLISECONDS.sleep(1000);
-                    car.setX(car.getX() + car.getTranslateX());
-                    car.setY(car.getY() + car.getTranslateY());
-                    car.setTranslateX(0);
-                    car.setTranslateY(0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
