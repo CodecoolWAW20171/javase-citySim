@@ -17,7 +17,6 @@ public class Main extends Application {
         thread.start();
         Scene scene = new Scene(pane, 1280, 720);
         primaryStage.setOnCloseRequest(event -> {
-            System.out.println("Koniec");
             lightController.stop();
         });
         primaryStage.setTitle("CitySim");
