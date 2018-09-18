@@ -4,8 +4,6 @@ import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.LinkedList;

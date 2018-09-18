@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.QuadCurve?>
-<?import javafx.scene.shape.Line?>
-
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.shape.*?>
 <Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       stylesheets="@/css/style.css" styleClass="scene">

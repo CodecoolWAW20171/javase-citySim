@@ -4,7 +4,6 @@ import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.roads.Road;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.concurrent.TimeUnit;
