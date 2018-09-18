@@ -4,8 +4,6 @@ import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.LinkedList;
@@ -16,6 +14,7 @@ class VehicleController {
     private double moveOfAxis;
     private String axis;
 
+    //Check if car is in the given roads List of vehicles, if not add it.
     VehicleController(Vehicle car, Road road) {
         LinkedList<Vehicle> vehiclesList = road.getVehicles();
         if (!vehiclesList.contains(car)) {
@@ -27,6 +26,7 @@ class VehicleController {
 
     void moveTheCar(Vehicle car, Road road) {
         LinkedList<Vehicle> vehiclesList = road.getVehicles();
+        //Check if there is a car in front of our car
         if (vehiclesList.indexOf(car) -1 >= 0) {
             Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(car) - 1);
             if (car.getX() == nextVehicle.getX()) {
@@ -88,6 +88,7 @@ class VehicleController {
                 moveOfAxis = - convertSpeedToPixels((int) currentSpeed);
             } else {
                 System.out.println(car.getX() + ":::" + car.getY());
+                System.out.println(currentSpeed + ":::" + convertSpeedToPixels((int) currentSpeed));
                 moveInAStraightLine.setByX(convertSpeedToPixels((int) currentSpeed));
                 moveOfAxis = convertSpeedToPixels((int) currentSpeed);
             }

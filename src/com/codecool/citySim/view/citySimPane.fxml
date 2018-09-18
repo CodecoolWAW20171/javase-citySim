@@ -7,7 +7,7 @@
 <Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       stylesheets="@/css/style.css" styleClass="scene">
-<Pane layoutX="640" layoutY="360" fx:id="pane">
+<Pane layoutX="640" layoutY="360" fx:id="pane" prefHeight="720" prefWidth="1280">
 
       <!--Crossroad-->
       <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"

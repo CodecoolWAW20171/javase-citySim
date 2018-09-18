@@ -49,7 +49,6 @@ public abstract class Vehicle {
     }
 
     public void setX(double x) {
-        this.image.setX(x);
         this.x = x;
     }
 
@@ -58,7 +57,6 @@ public abstract class Vehicle {
     }
 
     public void setY(double y) {
-        this.image.setY(y);
         this.y = y;
     }
 }

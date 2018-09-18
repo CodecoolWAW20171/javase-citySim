@@ -17,14 +17,16 @@ public class CitySimPaneController {
 
     public void initialize() {
         Car car = new Car(road1.getStartX(), road1.getStartY());
+        car.getImage().setX(car.getX());
+        car.getImage().setY(car.getY());
         pane.getChildren().add(car.getImage());
         VehicleController movingCar = new VehicleController(car, road1);
         new Thread(() -> {
             while (car != null) {
-                movingCar.moveTheCar(car, road1);
                 try {
+                    movingCar.moveTheCar(car, road1);
                     TimeUnit.MILLISECONDS.sleep(1000);
-//                    movingCar.setCarsXY(car);
+                    movingCar.setCarsXY(car);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
