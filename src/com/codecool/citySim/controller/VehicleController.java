@@ -114,6 +114,9 @@ class VehicleController {
 
     //set on which axis car is moving, also how far and which way
     private void setCarMovement(boolean axis, double value) {
+        int minDist = 10;
+        int stop = 0;
+        if (value < minDist) { value = stop; }
         if (axis) {
             moveInAStraightLine.setByX(value);
         } else {
