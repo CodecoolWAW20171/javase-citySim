@@ -41,10 +41,6 @@ public class LightController implements Runnable {
         }
     }
 
-    public void stop() {
-        System.exit(0);
-    }
-
     public long getTimeOfLight() {
         return timeOfLight;
     }

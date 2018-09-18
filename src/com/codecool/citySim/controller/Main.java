@@ -11,19 +11,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Pane pane = FXMLLoader.load(getClass().getResource("../view/citySimPane.fxml"));
-        LightController lightController = new LightController(pane);
 
-        Thread thread = new Thread(lightController);
-        thread.start();
         Scene scene = new Scene(pane, 1280, 720);
-        primaryStage.setOnCloseRequest(event -> {
-            lightController.stop();
-        });
         primaryStage.setTitle("CitySim");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        System.exit(0);
+    }
 
     public static void main(String[] args) {
         launch(args);

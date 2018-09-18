@@ -31,5 +31,11 @@ public class CitySimPaneController {
                 }
             }
         }).start();
+
+        LightController lightController = new LightController(pane);
+
+        Thread thread = new Thread(lightController);
+        thread.start();
+
     }
 }
