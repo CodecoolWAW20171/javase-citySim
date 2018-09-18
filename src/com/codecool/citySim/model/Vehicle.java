@@ -1,13 +1,27 @@
 package com.codecool.citySim.model;
 
-import javafx.scene.image.ImageView;
-
-public abstract class Vehicle extends ImageView {
+public abstract class Vehicle {
+    protected double x;
+    protected double y;
+    private String image;
     protected double speed;
-    protected double maxSpeed;
+    private double maxSpeed;
     protected int minDist;
     protected double acceleration;
-    protected ImageView image;
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
 }
