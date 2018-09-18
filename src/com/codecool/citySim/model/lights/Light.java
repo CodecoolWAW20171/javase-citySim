@@ -6,6 +6,10 @@ public class Light {
     private boolean isGreen;
     private boolean isVertical;
 
+    public void changeLight() {
+        setGreen(!isGreen());
+    }
+
     public String getId() {
         return id;
     }

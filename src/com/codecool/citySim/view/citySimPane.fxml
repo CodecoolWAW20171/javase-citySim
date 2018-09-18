@@ -8,37 +8,36 @@
 <Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       stylesheets="@/css/style.css" styleClass="scene">
-<Pane layoutX="640" layoutY="360" fx:id="pane">
+    <Pane layoutX="640" layoutY="360" fx:id="pane">
 
-      <!--Crossroad-->
-      <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7"
-                 styleClass="turn"/>
-      <Line fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
+        <!--Crossroad-->
+        <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"
+                   styleClass="turn"/>
+        <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7"
+                   styleClass="turn"/>
+        <Line fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
 
-      <QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7"
-                 styleClass="turn"/>
-      <Line fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
+        <QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7"
+                   styleClass="turn"/>
+        <QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7"
+                   styleClass="turn"/>
+        <Line fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8"/>
 
-      <QuadCurve fx:id="upRightTurn" controlX="7" controlY="7" endX="16" endY="8" startX="8" startY="16"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="upLeftTurn" controlX="7" controlY="-7" endX="-16" endY="-8" startX="8" startY="16"
-                 styleClass="turn"/>
-      <Line fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
+        <QuadCurve fx:id="upRightTurn" controlX="7" controlY="7" endX="16" endY="8" startX="8" startY="16"
+                   styleClass="turn"/>
+        <QuadCurve fx:id="upLeftTurn" controlX="7" controlY="-7" endX="-16" endY="-8" startX="8" startY="16"
+                   styleClass="turn"/>
+        <Line fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16"/>
 
-      <QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7"
-                 styleClass="turn"/>
-      <Line fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />
-</Pane>
+        <QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7"
+                   styleClass="turn"/>
+        <QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7"
+                   styleClass="turn"/>
+        <Line fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16"/>
 
-    <Rectangle fx:id="horizontalLightUp" fill="green" translateX="-35" translateY="-25" width="20" height="10"/>
-    <Rectangle fx:id="horizontalLightDown" fill="green" translateX="15" translateY="15" width="20" height="10"/>
-    <Rectangle fx:id="verticalLightRight" fill="red" translateX="15" translateY="-35" width="10" height="20"/>
-    <Rectangle fx:id="verticalLightLeft" fill="red" translateX="-25" translateY="15" width="10" height="20"/>
-
+        <Rectangle fx:id="horizontalLightUp" fill="green" translateX="-35" translateY="-25" width="20" height="10"/>
+        <Rectangle fx:id="horizontalLightDown" fill="green" translateX="15" translateY="15" width="20" height="10"/>
+        <Rectangle fx:id="verticalLightRight" fill="red" translateX="15" translateY="-35" width="10" height="20"/>
+        <Rectangle fx:id="verticalLightLeft" fill="red" translateX="-25" translateY="15" width="10" height="20"/>
+    </Pane>
 </Pane>
