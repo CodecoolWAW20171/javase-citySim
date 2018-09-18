@@ -1,6 +1,7 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.lights.Light;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -11,10 +12,11 @@ public class LightController implements Runnable {
     private Light verticalLightLeft;
     private Light horizontalLightUp;
     private Light horizontalLightDown;
-
+    private Pane pane;
     private long timeOfLight;
 
-    public LightController() {
+    public LightController(Pane pane) {
+        this.pane = pane;
         verticalLightRight = new Light();
         verticalLightRight.setVertical(true);
         verticalLightRight.setGreen(true);
@@ -44,10 +46,10 @@ public class LightController implements Runnable {
 
         while (true) {
 
-            Rectangle verticalLightRightRect = (Rectangle) Globals.pane.lookup(verticalLightRight.getId());
-            Rectangle verticalLightLeftRect = (Rectangle) Globals.pane.lookup(verticalLightLeft.getId());
-            Rectangle horizontalLightUpRect = (Rectangle) Globals.pane.lookup(horizontalLightUp.getId());
-            Rectangle horizontalLightDownRect = (Rectangle) Globals.pane.lookup(horizontalLightDown.getId());
+            Rectangle verticalLightRightRect = (Rectangle) pane.lookup(verticalLightRight.getId());
+            Rectangle verticalLightLeftRect = (Rectangle) pane.lookup(verticalLightLeft.getId());
+            Rectangle horizontalLightUpRect = (Rectangle) pane.lookup(horizontalLightUp.getId());
+            Rectangle horizontalLightDownRect = (Rectangle) pane.lookup(horizontalLightDown.getId());
 
             if ((verticalLightRight.isGreen() && verticalLightLeft.isGreen()) || (!horizontalLightUp.isGreen() && !horizontalLightDown.isGreen())) {
 
