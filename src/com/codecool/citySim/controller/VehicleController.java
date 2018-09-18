@@ -4,6 +4,7 @@ import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.LinkedList;
@@ -11,6 +12,8 @@ import java.util.LinkedList;
 class VehicleController {
 
     private double currentSpeed;
+    private double moveOfAxis;
+    private String axis;
 
     VehicleController(Vehicle car, Road road) {
         LinkedList<Vehicle> vehiclesList = road.getVehicles();
@@ -67,9 +70,7 @@ class VehicleController {
                 }
             }
         }
-        TranslateTransition moveInAStraightLine = new TranslateTransition(Duration.millis(1000), car);
-        double moveOfAxis;
-        String axis;
+        TranslateTransition moveInAStraightLine = new TranslateTransition(Duration.millis(1000), new ImageView(car.getImage()));
         if (Math.abs(road.getEndX()) - Math.abs(road.getStartX()) == 0) {
             if (road.getStartX() < 0) {
                 moveInAStraightLine.setByY(convertSpeedToPixels((int) currentSpeed));

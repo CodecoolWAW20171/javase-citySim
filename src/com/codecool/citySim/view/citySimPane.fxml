@@ -2,49 +2,37 @@
 
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.QuadCurve?>
-<?import com.codecool.citySim.model.roads.Road?>
+<?import javafx.scene.shape.Line?>
 
-<Pane fx:id="pane" layoutX="640" layoutY="360" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
+<Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
-      stylesheets="@/css/style.css">
+      stylesheets="@/css/style.css" styleClass="scene">
+<Pane layoutX="640" layoutY="360" fx:id="pane">
 
-       <!--Horizontal roads-->
-      <Road fx:id="horizontalRightFirst" startX="-640" endX="-16" startY="8" endY="8"/>
-      <Road fx:id="horizontalRightSecond" startX="16" endX="640" startY="8" endY="8" />
-
-      <Road fx:id="horizontalLeftFirst" startX="640" endX="16" startY="-8" endY="-8" />
-      <Road fx:id="horizontalLeftSecond" startX="-16" endX="-640" startY="-8" endY="-8" />
-
-      <!-- Vertical roads-->
-      <Road fx:id="verticalDownFirst" startX="-8" endX="-8" startY="-360" endY="-16" />
-      <Road fx:id="verticalDownSecond" startX="-8" endX="-8" startY="16" endY="360" />
-
-      <Road fx:id="verticalUpFirst" startX="8" endX="8" startY="360" endY="16"/>
-      <Road fx:id="verticalUpSecond" startX="8" endX="8" startY="-16" endY="-360"/>
-
-       <!--Crossroad-->
+      <!--Crossroad-->
       <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"
                  styleClass="turn"/>
       <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7"
                  styleClass="turn"/>
-      <Road fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
-
+      <Line fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
+ 
       <QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7"
                  styleClass="turn"/>
       <QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7"
                  styleClass="turn"/>
-      <Road fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
+      <Line fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
 
       <QuadCurve fx:id="upRightTurn" controlX="7" controlY="7" endX="16" endY="8" startX="8" startY="16"
                  styleClass="turn"/>
       <QuadCurve fx:id="upLeftTurn" controlX="7" controlY="-7" endX="-16" endY="-8" startX="8" startY="16"
                  styleClass="turn"/>
-      <Road fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
+      <Line fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
 
       <QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7"
                  styleClass="turn"/>
       <QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7"
                  styleClass="turn"/>
-      <Road fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />
+      <Line fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />
 
+</Pane>
 </Pane>
