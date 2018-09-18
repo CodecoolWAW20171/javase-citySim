@@ -4,6 +4,7 @@ import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -70,7 +71,8 @@ class VehicleController {
                 }
             }
         }
-        TranslateTransition moveInAStraightLine = new TranslateTransition(Duration.millis(1000), new ImageView(car.getImage()));
+        TranslateTransition moveInAStraightLine = new TranslateTransition(Duration.millis(1000),
+                car.getImage());
         if (Math.abs(road.getEndX()) - Math.abs(road.getStartX()) == 0) {
             if (road.getStartX() < 0) {
                 moveInAStraightLine.setByY(convertSpeedToPixels((int) currentSpeed));
@@ -85,6 +87,7 @@ class VehicleController {
                 moveInAStraightLine.setByX(-convertSpeedToPixels((int) currentSpeed));
                 moveOfAxis = - convertSpeedToPixels((int) currentSpeed);
             } else {
+                System.out.println(car.getX() + ":::" + car.getY());
                 moveInAStraightLine.setByX(convertSpeedToPixels((int) currentSpeed));
                 moveOfAxis = convertSpeedToPixels((int) currentSpeed);
             }
@@ -92,18 +95,17 @@ class VehicleController {
         }
         moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
         moveInAStraightLine.play();
-        moveInAStraightLine.setOnFinished(event -> setCarsXY(axis, moveOfAxis, car));
     }
 
     private double convertSpeedToPixels(int speed) {
         return Double.parseDouble(String.valueOf((speed / 0.27778) / 5));
     }
 
-    private void setCarsXY(String axis, double value, Vehicle car) {
+    public void setCarsXY(Vehicle car) {
         if (axis.equals("X")) {
-            car.setX(car.getX() + value);
+            car.setX(car.getX() + moveOfAxis);
         } else {
-            car.setY(car.getY() + value);
+            car.setY(car.getY() + moveOfAxis);
         }
     }
 

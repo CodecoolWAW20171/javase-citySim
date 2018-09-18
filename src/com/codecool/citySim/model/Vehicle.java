@@ -1,20 +1,23 @@
 package com.codecool.citySim.model;
 
+
+import javafx.scene.image.ImageView;
+
 public abstract class Vehicle {
     protected double x;
     protected double y;
-    private String image;
+    private ImageView image;
     protected double speed;
     private double maxSpeed;
     protected int minDist;
     protected double acceleration;
 
-    public void setImage(String image) {
-        this.image = image;
+    public ImageView getImage() {
+        return image;
     }
 
-    public String getImage() {
-        return image;
+    public void setImage(ImageView image) {
+        this.image = image;
     }
 
     public void setMaxSpeed(double maxSpeed) {
@@ -46,6 +49,7 @@ public abstract class Vehicle {
     }
 
     public void setX(double x) {
+        this.image.setX(x);
         this.x = x;
     }
 
@@ -54,6 +58,7 @@ public abstract class Vehicle {
     }
 
     public void setY(double y) {
+        this.image.setY(y);
         this.y = y;
     }
 }
