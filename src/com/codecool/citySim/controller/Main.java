@@ -1,5 +1,7 @@
 package com.codecool.citySim.controller;
 
+import com.codecool.citySim.model.cars.Car;
+import com.codecool.citySim.model.roads.Road;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

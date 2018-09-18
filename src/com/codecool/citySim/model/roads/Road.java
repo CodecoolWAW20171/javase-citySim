@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class Road {
     private Double[] startPos;
     private Double[] endPos;
-    private LinkedList<Vehicle> vehicles;
+    private LinkedList<Vehicle> vehicles = new LinkedList<>();
 
     public Road(double startX, double startY, double endX, double endY) {
         startPos = new Double[]{startX, startY};
@@ -29,5 +29,13 @@ public class Road {
 
     public double getEndY() {
         return endPos[1];
+    }
+
+    public LinkedList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(LinkedList<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }
