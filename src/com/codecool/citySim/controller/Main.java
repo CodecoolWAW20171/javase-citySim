@@ -13,7 +13,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../view/citySimPane.fxml"));
         primaryStage.setTitle("CitySim");
         primaryStage.setScene(new Scene(root, 1280, 720));
+        SoundController musicPlayer = new SoundController();
         primaryStage.show();
+        musicPlayer.playTraffic.play();
     }
 
 
