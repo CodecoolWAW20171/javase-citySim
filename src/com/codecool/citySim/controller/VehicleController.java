@@ -79,18 +79,28 @@ class VehicleController {
         //check if basicRoad is moving in X or Y axis
         if (axis) {
             //check if basicCar is moving left or right on its axis
-            if (roadStartX < 0) {
+            if (roadStartY > 0) {
+                System.out.println("moving right");
+                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
+                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                System.out.println(basicCar.getX() + ":::" + basicCar.getY());
+                System.out.println("moving left");
+                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
                 System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
-            if (roadStartY < 0) {
-                moveOfAxis = - convertSpeedToPixels(currentSpeed);
-            } else {
+            if (roadStartX < 0) {
+                System.out.println("moving down");
+                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
+                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
+            } else {
+                System.out.println("moving up");
+                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
+                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
+                moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
         //set by how far basicCar is supposed to move in TranslateTransition
@@ -117,7 +127,7 @@ class VehicleController {
     private void setCarMovement(boolean axis, double value) {
         int minDist = 10;
         int stop = 0;
-        if (value < minDist) { value = stop; }
+        if (Math.abs(value) < minDist) { value = stop; moveOfAxis = stop; }
         if (axis) {
             moveInAStraightLine.setByX(value);
         } else {
