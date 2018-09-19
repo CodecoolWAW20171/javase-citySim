@@ -16,6 +16,7 @@ public class Main extends Application {
         primaryStage.setTitle("CitySim");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
     }
 
     @Override

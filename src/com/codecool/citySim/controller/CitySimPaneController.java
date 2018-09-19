@@ -45,16 +45,17 @@ public class CitySimPaneController {
             Car car = new Car(road.getStartX(), road.getStartY());
             Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
 
-            VehicleController vc = new VehicleController(car, road, crossRoadLights);
+            VehicleController vc = new VehicleController(car, road);
             System.out.println("generated: " + car);
             new Thread(() -> {
+                VehicleController vc = new VehicleController(car, road);
                 while (road.getVehicles().indexOf(car) != -1) {
                     try {
-                        vc.moveTheCar(car, road, crossRoadLights);
+                        vc.moveTheCar();
                         TimeUnit.MILLISECONDS.sleep(1000);
                         vc.setCarsXY(car);
-                        if (Math.abs(car.getX() - road.getEndX()) < 35 && Math.abs(car.getY() - road.getEndY()) < 35)
-                            road.getVehicles().remove(car);
+//                        if (Math.abs(car.getX() - road.getEndX()) < 35 && Math.abs(car.getY() - road.getEndY()) < 35)
+//                            road.getVehicles().remove(car);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
