@@ -20,7 +20,8 @@ public class CitySimPaneController {
             while (true) {
                 try {
                     TimeUnit.SECONDS.sleep(1);
-                    carGenerator();
+                    if (sim.getVehicles() < 30)
+                        carGenerator();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -32,6 +33,7 @@ public class CitySimPaneController {
         Random random = new Random();
 
         if (random.nextInt(100) < 50) {
+            sim.setVehicles(sim.getVehicles() + 1);
             Road road = sim.getFirstRoads()[random.nextInt(4)];
             Car car = new Car(road.getStartX(), road.getStartY());
             Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
