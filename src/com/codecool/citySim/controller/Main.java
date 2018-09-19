@@ -1,7 +1,5 @@
 package com.codecool.citySim.controller;
 
-import com.codecool.citySim.model.cars.Car;
-import com.codecool.citySim.model.roads.Road;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("CitySim");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
     }
 
 
