@@ -18,8 +18,10 @@ class VehicleController {
     private Vehicle basicCar;
     private Road basicRoad;
     private CrossRoadLights crossRoadLights;
+
     //Check if car is in the given roads List of vehicles, if not add it.
-    VehicleController(Vehicle car, Road road) {
+    VehicleController(Vehicle car, Road road, CrossRoadLights crossRoadLights) {
+        this.crossRoadLights = crossRoadLights;
         if (road.getStartX() == 640) car.getImage().setRotate(180);
         if (road.getStartX() == 8) car.getImage().setRotate(270);
         if (road.getStartX() == -8) car.getImage().setRotate(90);
@@ -97,10 +99,10 @@ class VehicleController {
             }
         } else {
             if (roadStartX < 0) {
-                currentSpeed = checkHorizontalLight(crossRoadLights, car, -60, 0, "verticalLightLeft");
+                currentSpeed = checkHorizontalLight(crossRoadLights, basicCar, -60, 0, "verticalLightLeft");
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                currentSpeed = checkHorizontalLight(crossRoadLights, car, 0, 60, "verticalLightRight");
+                currentSpeed = checkHorizontalLight(crossRoadLights, basicCar, 0, 60, "verticalLightRight");
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
