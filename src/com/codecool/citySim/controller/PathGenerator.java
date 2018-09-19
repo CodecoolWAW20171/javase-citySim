@@ -1,0 +1,86 @@
+package com.codecool.citySim.controller;
+
+import com.codecool.citySim.model.Simulation;
+import com.codecool.citySim.model.roads.Road;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.QuadCurveTo;
+
+import java.util.Random;
+
+class PathGenerator {
+
+    private Simulation roadsLists = new Simulation();
+    private Road[] secondRoads = roadsLists.getSecondRoads();
+    private Random rand = new Random();
+    Path newTurn = new Path();
+    private double roadEndX;
+    private double roadEndY;
+    private double chosenStartX;
+    private double chosenEndX;
+    private double chosenStartY;
+    private double chosenEndY;
+
+    PathGenerator(Road road) {
+        Road chosenRoad = chooseRoad();
+        double roadStartX = road.getStartX();
+        roadEndX = road.getEndX();
+        double roadStartY = road.getStartY();
+        roadEndY = road.getEndY();
+        chosenStartX = chosenRoad.getStartX();
+        chosenEndX = chosenRoad.getEndX();
+        chosenStartY = chosenRoad.getStartY();
+        chosenEndY = chosenRoad.getEndY();
+        if (chosenEndX != roadStartX && chosenEndY != roadStartY) {
+            MoveTo getToStartOfTurn = new MoveTo(roadEndX, roadEndY);
+            newTurn.getElements().add(getToStartOfTurn);
+            checkNextTurn();
+        }
+    }
+
+    private void checkNextTurn() {
+        int diffX = (int) Math.abs(Math.abs(roadEndX) - Math.abs(chosenStartX));
+        int diffY = (int) Math.abs(Math.abs(roadEndY) - Math.abs(chosenStartY));
+        int controlX, controlY;
+        int CONTROL_TURN = 7;
+        int RIGHT_TURN_DIFF = 8;
+        int LEFT_TURN_DIFF = 24;
+        int VEHICLE_STRAIGHTENING_MOVEMENT = 8;
+        if (diffX == RIGHT_TURN_DIFF && diffY == RIGHT_TURN_DIFF) {
+            controlX = chosenStartX > 0 ? CONTROL_TURN : -CONTROL_TURN;
+            controlY = chosenStartY > 0 ? CONTROL_TURN : -CONTROL_TURN;
+            QuadCurveTo nextMove = new QuadCurveTo(controlX, controlY, chosenStartX, chosenStartY);
+            newTurn.getElements().add(nextMove);
+        } else if (diffX == LEFT_TURN_DIFF && diffY == LEFT_TURN_DIFF) {
+            controlY = chosenStartX > 0 ? CONTROL_TURN : -CONTROL_TURN;
+            controlX = chosenStartY > 0 ? -CONTROL_TURN : CONTROL_TURN;
+            QuadCurveTo nextMove = new QuadCurveTo(controlX, controlY, chosenStartX, chosenStartY);
+            newTurn.getElements().add(nextMove);
+        } else {
+            LineTo nextMove = new LineTo(chosenStartX, chosenStartY);
+            newTurn.getElements().add(nextMove);
+        }
+        int changeToVehicleMovement;
+        if (chosenStartX != chosenEndX) {
+            if (chosenStartX > chosenEndX) {
+                changeToVehicleMovement = -VEHICLE_STRAIGHTENING_MOVEMENT;
+            } else{
+                changeToVehicleMovement = VEHICLE_STRAIGHTENING_MOVEMENT;
+            }
+            newTurn.getElements().add(new LineTo(chosenStartX + changeToVehicleMovement, chosenStartY));
+        } else {
+            if (chosenStartY > chosenEndY) {
+                changeToVehicleMovement = -VEHICLE_STRAIGHTENING_MOVEMENT;
+            } else {
+                changeToVehicleMovement = VEHICLE_STRAIGHTENING_MOVEMENT;
+            }
+            newTurn.getElements().add(new LineTo(chosenStartX, chosenStartY + changeToVehicleMovement));
+        }
+    }
+
+    private Road chooseRoad() {
+        return secondRoads[rand.nextInt(3)];
+    }
+
+}
