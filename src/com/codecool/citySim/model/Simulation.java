@@ -13,7 +13,7 @@ public class Simulation {
             new Road(16, 8, 640, 8),
             new Road(-16, -8, -640, -8),
             new Road(-8, 16, -8, 360),
-            new Road(8, 16, 8, -360)
+            new Road(8, -16, 8, -360)
     };
 
     public Road[] getFirstRoads() {
