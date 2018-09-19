@@ -16,10 +16,11 @@ class VehicleController {
     private TranslateTransition moveInAStraightLine;
     private Vehicle basicCar;
     private Road basicRoad;
-
+    private CrossRoadLights crossRoadLights;
     //Check if car is in the given roads List of vehicles, if not add it.
-    VehicleController(Vehicle car, Road road) {
+    VehicleController(Vehicle car, Road road, CrossRoadLights crossRoadLights) {
         LinkedList<Vehicle> vehiclesList = road.getVehicles();
+        this.crossRoadLights = crossRoadLights;
         if (!vehiclesList.contains(car)) {
             vehiclesList.add(car);
             road.setVehicles(vehiclesList);

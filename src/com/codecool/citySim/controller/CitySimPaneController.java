@@ -15,13 +15,16 @@ public class CitySimPaneController {
     @FXML
     public Pane pane;
     private Simulation sim = new Simulation();
+    private CrossRoadLights crossRoadLights;
+    private LightController lightController;
 
     public void initialize() {
-        CrossRoadLights crossRoadLights = new CrossRoadLights();
-        LightController lightController = new LightController(pane, crossRoadLights);
+        crossRoadLights = new CrossRoadLights();
+        lightController = new LightController(pane, crossRoadLights);
 
         Thread thread = new Thread(lightController);
         thread.start();
+
         new Thread(() -> {
             while (true) {
                 try {
@@ -42,12 +45,12 @@ public class CitySimPaneController {
             Car car = new Car(road.getStartX(), road.getStartY());
             Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
 
-            VehicleController vc = new VehicleController(car, road);
+            VehicleController vc = new VehicleController(car, road, crossRoadLights);
             System.out.println("generated: " + car);
             new Thread(() -> {
                 while (road.getVehicles().indexOf(car) != -1) {
                     try {
-                        vc.moveTheCar();
+                        vc.moveTheCar(car, road, crossRoadLights);
                         TimeUnit.MILLISECONDS.sleep(1000);
                         vc.setCarsXY(car);
                         if (Math.abs(car.getX() - road.getEndX()) < 35 && Math.abs(car.getY() - road.getEndY()) < 35)
