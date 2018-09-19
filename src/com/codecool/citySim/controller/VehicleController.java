@@ -1,6 +1,8 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Vehicle;
+import com.codecool.citySim.model.lights.CrossRoadLights;
+import com.codecool.citySim.model.lights.Light;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -29,26 +31,30 @@ class VehicleController {
         basicRoad = road;
     }
 
-    void moveTheCar() {
-        //Assign vehicles on this basicRoad to a variable
-        LinkedList<Vehicle> vehiclesList = basicRoad.getVehicles();
-        //Assign position X and Y of a basicCar to variables
+    void moveTheCar(Vehicle car, Road road, CrossRoadLights crossRoadLights) {
+        //Assign vehicles on this road to a variable
+        LinkedList<Vehicle> vehiclesList = road.getVehicles();
+        //Assign position X and Y of a car to variables
         double carX, carY;
         carX = basicCar.getX();
         carY = basicCar.getY();
         //assign basicRoad X and Y start and end points to variables
         double roadStartX, roadEndX, roadStartY, roadEndY;
-        roadStartX = basicRoad.getStartX();
-        roadStartY = basicRoad.getStartY();
-        roadEndX = basicRoad.getEndX();
-        roadEndY = basicRoad.getEndY();
-        //Check if basicRoad is going in X or Y axis, set boolean to true if X, false if Y
-        axis = !(roadStartX == roadEndX);
-        //Check if there is a vehicle in front of our basicCar
-        if (vehiclesList.indexOf(basicCar) -1 >= 0) {
-            //add name to the vehicle in front of our basicCar
-            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(basicCar) - 1);
-            //Assign position X and Y of a vehicle in front of our basicCar to variables
+        roadStartX = road.getStartX();
+        roadStartY = road.getStartY();
+        roadEndX = road.getEndX();
+        roadEndY = road.getEndY();
+        //Check if road is going in X or Y axis
+        if (roadStartX == roadEndX) {
+            axis = false;
+        } else {
+            axis = true;
+        }
+        //Check if there is a vehicle in front of our car
+        if (vehiclesList.indexOf(car) -1 >= 0) {
+            //add name to the vehicle in front of our car
+            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(car) - 1);
+            //Assign position X and Y of a vehicle in front of our car to variables
             double nextVehicleX = nextVehicle.getX();
             double nextVehicleY = nextVehicle.getY();
             // check if vehicles are moving on X or Y axis
@@ -83,11 +89,13 @@ class VehicleController {
                 System.out.println("moving right");
                 System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
                 System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
+
+            //check if car is moving left or right on its axis
+            if (roadStartX < 0) {
+                currentSpeed = checkHorizontalLight(crossRoadLights,car,-60, 0, "verticalLightLeft");
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                System.out.println("moving left");
-                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
-                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
+                currentSpeed = checkHorizontalLight(crossRoadLights,car,0, 60, "verticalLightRight");
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
@@ -101,6 +109,10 @@ class VehicleController {
                 System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
                 System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
+            if (roadStartY < 0) {
+                moveOfAxis = -convertSpeedToPixels(currentSpeed);
+            } else {
+                moveOfAxis = convertSpeedToPixels(currentSpeed);
             }
         }
         //set by how far basicCar is supposed to move in TranslateTransition
@@ -111,6 +123,20 @@ class VehicleController {
         moveInAStraightLine.play();
     }
 
+    private double checkHorizontalLight(CrossRoadLights crossRoadLights, Vehicle car, double startLightSphere, double endLightSphere,  String lightId ) {
+        Light verticalLightLeft = crossRoadLights.getLights().get(lightId);
+        if (car.getX() > startLightSphere && car.getX() < endLightSphere) {
+            System.out.println("sprawdz swiatło " + verticalLightLeft.isGreen());
+            if (verticalLightLeft.isGreen()) {
+                car.setSpeed(/*car.getMaxSpeed()*/ 10);
+            } else {
+                car.setSpeed(0);
+            }
+
+        } else {
+        }
+        return car.getSpeed();
+    }
     //speed of a car is converted from km/h to m/s and then divided by 5, because 1m in app is 5px
     private double convertSpeedToPixels(double speed) {
         double KMHtoMS = 0.27778;
