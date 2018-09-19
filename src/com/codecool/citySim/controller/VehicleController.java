@@ -7,7 +7,6 @@ import com.codecool.citySim.model.roads.Road;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-
 import java.util.LinkedList;
 
 class VehicleController {
@@ -90,37 +89,39 @@ class VehicleController {
                 System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
                 System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
 
-            //check if car is moving left or right on its axis
-            if (roadStartX < 0) {
-                currentSpeed = checkHorizontalLight(crossRoadLights,car,-60, 0, "verticalLightLeft");
-                moveOfAxis = convertSpeedToPixels(currentSpeed);
+                //check if car is moving left or right on its axis
+                if (roadStartX < 0) {
+                    currentSpeed = checkHorizontalLight(crossRoadLights, car, -60, 0, "verticalLightLeft");
+                    moveOfAxis = convertSpeedToPixels(currentSpeed);
+                } else {
+                    currentSpeed = checkHorizontalLight(crossRoadLights, car, 0, 60, "verticalLightRight");
+                    moveOfAxis = -convertSpeedToPixels(currentSpeed);
+                }
             } else {
-                currentSpeed = checkHorizontalLight(crossRoadLights,car,0, 60, "verticalLightRight");
-                moveOfAxis = -convertSpeedToPixels(currentSpeed);
-            }
-        } else {
-            if (roadStartX < 0) {
-                System.out.println("moving down");
-                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
-                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
-                moveOfAxis = convertSpeedToPixels(currentSpeed);
-            } else {
-                System.out.println("moving up");
-                System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
-                System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
-                moveOfAxis = -convertSpeedToPixels(currentSpeed);
-            if (roadStartY < 0) {
-                moveOfAxis = -convertSpeedToPixels(currentSpeed);
-            } else {
-                moveOfAxis = convertSpeedToPixels(currentSpeed);
+                if (roadStartX < 0) {
+                    System.out.println("moving down");
+                    System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
+                    System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
+                    moveOfAxis = convertSpeedToPixels(currentSpeed);
+                } else {
+                    System.out.println("moving up");
+                    System.out.println("Car pos: " + basicCar.getX() + ":::" + basicCar.getY());
+                    System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
+                    moveOfAxis = -convertSpeedToPixels(currentSpeed);
+                    if (roadStartY < 0) {
+                        moveOfAxis = -convertSpeedToPixels(currentSpeed);
+                    } else {
+                        moveOfAxis = convertSpeedToPixels(currentSpeed);
+                    }
+                }
+                //set by how far basicCar is supposed to move in TranslateTransition
+                setCarMovement(axis, moveOfAxis);
+                //remove acceleration and braking in one step
+                moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
+                //move the basicCar
+                moveInAStraightLine.play();
             }
         }
-        //set by how far basicCar is supposed to move in TranslateTransition
-        setCarMovement(axis, moveOfAxis);
-        //remove acceleration and braking in one step
-        moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
-        //move the basicCar
-        moveInAStraightLine.play();
     }
 
     private double checkHorizontalLight(CrossRoadLights crossRoadLights, Vehicle car, double startLightSphere, double endLightSphere,  String lightId ) {

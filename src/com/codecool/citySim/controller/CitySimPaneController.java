@@ -2,6 +2,7 @@ package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
+import com.codecool.citySim.model.lights.CrossRoadLights;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
@@ -31,6 +32,12 @@ public class CitySimPaneController {
         PathTransition pathTransition = new PathTransition(Duration.seconds(3), righToUpTurn, car.getImage());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
+        CrossRoadLights crossRoadLights = new CrossRoadLights();
+        LightController lightController = new LightController(pane, crossRoadLights);
+
+        Thread thread = new Thread(lightController);
+        thread.start();
+
         pathTransition.setOnFinished(event -> new Thread(() -> {
             car.getImage().setX(8);
             car.getImage().setY(-16);
@@ -42,7 +49,7 @@ public class CitySimPaneController {
                         "CarImg X Y: " + car.getImage().getX() + " " + car.getImage().getY());
 
                 try {
-                    movingCar.moveTheCar();
+                    movingCar.moveTheCar(car, road1, crossRoadLights );
                     TimeUnit.MILLISECONDS.sleep(1000);
                     movingCar.setCarsXY(car);
                 } catch (InterruptedException e) {
@@ -52,12 +59,5 @@ public class CitySimPaneController {
         }).start());
 
         pathTransition.play();
-
-
-        LightController lightController = new LightController(pane);
-
-        Thread thread = new Thread(lightController);
-        thread.start();
-
     }
 }
