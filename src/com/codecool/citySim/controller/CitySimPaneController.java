@@ -4,7 +4,6 @@ import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.roads.Road;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.concurrent.TimeUnit;
@@ -17,14 +16,12 @@ public class CitySimPaneController {
 
     public void initialize() {
         Car car = new Car(road1.getStartX(), road1.getStartY());
-        car.getImage().setX(car.getX());
-        car.getImage().setY(car.getY());
-        pane.getChildren().add(car.getImage());
         VehicleController movingCar = new VehicleController(car, road1);
+        pane.getChildren().add(car.getImage());
         new Thread(() -> {
             while (car != null) {
                 try {
-                    movingCar.moveTheCar(car, road1);
+                    movingCar.moveTheCar();
                     TimeUnit.MILLISECONDS.sleep(1000);
                     movingCar.setCarsXY(car);
                 } catch (InterruptedException e) {

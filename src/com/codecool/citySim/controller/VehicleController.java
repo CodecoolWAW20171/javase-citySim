@@ -13,6 +13,8 @@ class VehicleController {
     private double moveOfAxis;
     private boolean axis;
     private TranslateTransition moveInAStraightLine;
+    private Vehicle basicCar;
+    private Road basicRoad;
 
     //Check if car is in the given roads List of vehicles, if not add it.
     VehicleController(Vehicle car, Road road) {
@@ -21,67 +23,66 @@ class VehicleController {
             vehiclesList.add(car);
             road.setVehicles(vehiclesList);
         }
-
+        car.getImage().setX(car.getX());
+        car.getImage().setY(car.getY());
+        basicCar = car;
+        basicRoad = road;
     }
 
-    void moveTheCar(Vehicle car, Road road) {
-        //Assign vehicles on this road to a variable
-        LinkedList<Vehicle> vehiclesList = road.getVehicles();
-        //Assign position X and Y of a car to variables
+    void moveTheCar() {
+        //Assign vehicles on this basicRoad to a variable
+        LinkedList<Vehicle> vehiclesList = basicRoad.getVehicles();
+        //Assign position X and Y of a basicCar to variables
         double carX, carY;
-        carX = car.getX();
-        carY = car.getY();
-        //assign road X and Y start and end points to variables
+        carX = basicCar.getX();
+        carY = basicCar.getY();
+        //assign basicRoad X and Y start and end points to variables
         double roadStartX, roadEndX, roadStartY, roadEndY;
-        roadStartX = road.getStartX();
-        roadStartY = road.getStartY();
-        roadEndX = road.getEndX();
-        roadEndY = road.getEndY();
-        //Check if road is going in X or Y axis
-        if (roadStartX == roadEndX) {
-            axis = false;
-        } else {
-            axis = true;
-        }
-        //Check if there is a vehicle in front of our car
-        if (vehiclesList.indexOf(car) -1 >= 0) {
-            //add name to the vehicle in front of our car
-            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(car) - 1);
-            //Assign position X and Y of a vehicle in front of our car to variables
+        roadStartX = basicRoad.getStartX();
+        roadStartY = basicRoad.getStartY();
+        roadEndX = basicRoad.getEndX();
+        roadEndY = basicRoad.getEndY();
+        //Check if basicRoad is going in X or Y axis, set boolean to true if X, false if Y
+        axis = !(roadStartX == roadEndX);
+        //Check if there is a vehicle in front of our basicCar
+        if (vehiclesList.indexOf(basicCar) -1 >= 0) {
+            //add name to the vehicle in front of our basicCar
+            Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(basicCar) - 1);
+            //Assign position X and Y of a vehicle in front of our basicCar to variables
             double nextVehicleX = nextVehicle.getX();
             double nextVehicleY = nextVehicle.getY();
             // check if vehicles are moving on X or Y axis
             if (axis) {
-                //set car speed so that it keeps distance = 2*speed from vehicle in front
-                car.setSpeed(getSpeedByAxisDifference(carX, nextVehicleX));
+                //set basicCar speed so that it keeps distance = 2*speed from vehicle in front
+                basicCar.setSpeed(getSpeedByAxisDifference(carX, nextVehicleX));
             } else {
-                car.setSpeed(getSpeedByAxisDifference(carY, nextVehicleY));
+                basicCar.setSpeed(getSpeedByAxisDifference(carY, nextVehicleY));
             }
         } else {
-            //check if car is moving in X or Y axis
+            //check if basicCar is moving in X or Y axis
             if (axis) {
-                //set car speed so that it keeps distance = 2*speed from the crossroad
-                car.setSpeed(getSpeedByAxisDifference(carX, roadEndX));
+                //set basicCar speed so that it keeps distance = 2*speed from the crossroad
+                basicCar.setSpeed(getSpeedByAxisDifference(carX, roadEndX));
             } else {
-                car.setSpeed(getSpeedByAxisDifference(carY, roadEndY));
+                basicCar.setSpeed(getSpeedByAxisDifference(carY, roadEndY));
             }
         }
-        //check if car is driving within maximum speed
+        //check if basicCar is driving within maximum speed
         double currentSpeed;
-        if (car.getSpeed() > car.getMaxSpeed()) {
-            currentSpeed = car.getMaxSpeed();
+        if (basicCar.getSpeed() > basicCar.getMaxSpeed()) {
+            currentSpeed = basicCar.getMaxSpeed();
         } else {
-            currentSpeed = car.getSpeed();
+            currentSpeed = basicCar.getSpeed();
         }
-        //create animation for car movement, assign cars Image View to it
-        moveInAStraightLine = new TranslateTransition(Duration.millis(1000), car.getImage());
-        //check if road is moving in X or Y axis
+        //create animation for basicCar movement, assign cars Image View to it
+        moveInAStraightLine = new TranslateTransition(Duration.millis(1000), basicCar.getImage());
+        //check if basicRoad is moving in X or Y axis
         if (axis) {
-            //check if car is moving left or right on its axis
+            //check if basicCar is moving left or right on its axis
             if (roadStartX < 0) {
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                System.out.println(car.getX() + ":::" + car.getY());
+                System.out.println(basicCar.getX() + ":::" + basicCar.getY());
                 System.out.println(currentSpeed + ":::" + convertSpeedToPixels(currentSpeed));
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
@@ -92,11 +93,11 @@ class VehicleController {
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             }
         }
-        //set by how far car is supposed to move in TranslateTransition
+        //set by how far basicCar is supposed to move in TranslateTransition
         setCarMovement(axis, moveOfAxis);
         //remove acceleration and braking in one step
         moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
-        //move the car
+        //move the basicCar
         moveInAStraightLine.play();
     }
 
@@ -133,4 +134,11 @@ class VehicleController {
         }
     }
 
+    public Road getBasicRoad() {
+        return basicRoad;
+    }
+
+    public void setBasicRoad(Road basicRoad) {
+        this.basicRoad = basicRoad;
+    }
 }
