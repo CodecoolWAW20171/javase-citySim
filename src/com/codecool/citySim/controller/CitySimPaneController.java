@@ -17,7 +17,7 @@ public class CitySimPaneController {
 
     @FXML
     public Pane pane;
-    private SoundController souondController = new SoundController();
+    private SoundController soundController = new SoundController();
     private Simulation sim = new Simulation();
 
     private CrossRoadLights crossRoadLights;
@@ -32,15 +32,13 @@ public class CitySimPaneController {
 
         new Thread(() -> {
             while (thread.isAlive()) {
-                souondController.playTraffic.play();
+                soundController.playTraffic.play();
                 try {
                     TimeUnit.SECONDS.sleep(1);
                     if (sim.getVehicles() < 10)
                         carGenerator();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | NullPointerException e) {
                     e.printStackTrace();
-                } catch (NullPointerException e) {
-                    System.out.println("Generowanie");
                 }
             }
         }).start();
