@@ -1,8 +1,10 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Simulation;
+import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.lights.CrossRoadLights;
+import com.codecool.citySim.model.lights.Light;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
@@ -30,9 +32,8 @@ public class CitySimPaneController {
         new Thread(() -> {
             while (true) {
                 try {
+                    carGenerator();
                     TimeUnit.SECONDS.sleep(1);
-                    if (sim.getVehicles() < 2)
-                        carGenerator();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -45,12 +46,15 @@ public class CitySimPaneController {
 
         if (random.nextInt(100) < 50) {
             sim.setVehicles(sim.getVehicles() + 1);
-            Road road = sim.getFirstRoads()[random.nextInt(1)];
+            Road road = sim.getFirstRoads()[random.nextInt(4)];
             Car car = new Car(road.getStartX(), road.getStartY());
             Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
 
             new Thread(() -> {
                 VehicleController vc = new VehicleController(car, road, crossRoadLights);
+                synchronized(this) {
+                    vc.setCarsXY(car);
+                }
                 try {
                     while (car.getImage() != null) {
                         vc.moveTheCar();

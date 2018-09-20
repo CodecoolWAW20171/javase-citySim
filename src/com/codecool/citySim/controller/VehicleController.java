@@ -94,21 +94,21 @@ class VehicleController {
             //check if basicCar is moving left or right on its axis
             if (roadStartY > 0) {
                 //System.out.println("W prawo verticalLightLeft");
-                currentSpeed = checkLights(-60, 0);
+                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
                 //System.out.println("W lewo verticalLightRight");
-                currentSpeed = checkLights(60, 0);
+                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
             if (roadStartX < 0) {
                 //System.out.println("Do dołu");
-                currentSpeed = checkLights(-60, 0);
+                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
                 //System.out.println("Do góry");
-                currentSpeed = checkLights(60, 0);
+                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
@@ -121,14 +121,18 @@ class VehicleController {
         moveInAStraightLine.play();
     }
 
-    private double checkLights(double startLightSphere, double endLightSphere) {
+    private double checkLights() {
         if (axis) {
-            if ((basicCar.getX() > startLightSphere && basicCar.getX() < endLightSphere) || (basicCar.getX() < startLightSphere && basicCar.getX() > endLightSphere)) {
-                checkTheLight("verticalLightRight");
+            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 70) {
+                checkTheLight("verticalLightLeft");
+            } else {
+                basicCar.setSpeed(basicCar.getSpeed());
             }
         } else {
-            if ((basicCar.getY() > startLightSphere && basicCar.getY() < endLightSphere) || (basicCar.getY() < startLightSphere && basicCar.getY() > endLightSphere)) {
+            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 70) {
                 checkTheLight("horizontalLightUp");
+            } else {
+                basicCar.setSpeed(basicCar.getSpeed());
             }
         }
         return basicCar.getSpeed();
@@ -136,13 +140,10 @@ class VehicleController {
 
     private void checkTheLight(String lightId) {
         Light horizontalLight = crossRoadLights.getLights().get(lightId);
-        System.out.println("sprawdzam swiatło");
         if (horizontalLight.isGreen()) {
             basicCar.setSpeed(basicCar.getSpeed());
-            System.out.println("GO");
         } else {
             basicCar.setSpeed(0);
-            System.out.println("STOP");
         }
     }
 
