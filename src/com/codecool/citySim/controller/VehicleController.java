@@ -121,7 +121,7 @@ class VehicleController {
         return Math.abs(pos1 - pos2) / 2;
     }
 
-    //set on which axis car is moving, also how far and which way
+    //set on which axis car is moving, also how far
     private void setCarMovement(boolean axis, double value) {
         int minDist = 15;
         int stop = 0;
