@@ -35,6 +35,9 @@ class VehicleController {
     void moveTheCar() {
         //Assign vehicles on this basicRoad to a variable
         LinkedList<Vehicle> vehiclesList = basicRoad.getVehicles();
+        if (isSecondRoad) {
+            vehiclesList = basicRoad.getVehicles();
+        }
 
         //Assign position X and Y of a basicCar to variables
         double carX, carY;

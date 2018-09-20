@@ -56,12 +56,6 @@ public class CitySimPaneController {
                                 Math.abs(car.getY() - road.getEndY()) < 45 &&
                                 car.equals(road.getVehicles().getFirst())
                         ) {
-                            if (end) {
-                                sim.setVehicles(sim.getVehicles() - 1);
-                                vc.getBasicRoad().getVehicles().remove(car);
-                                Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
-                                break;
-                            }
                             end = true;
                             PathGenerator pathGenerator = new PathGenerator(car, road);
                             PathTransition move = new PathTransition(Duration.seconds(2), pathGenerator.newTurn, car.getImage());
@@ -84,6 +78,8 @@ public class CitySimPaneController {
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } catch (NullPointerException nul) {
+                    nul.printStackTrace();
                 }
             }).start();
         }
