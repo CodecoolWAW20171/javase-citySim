@@ -71,7 +71,6 @@ public class CitySimPaneController {
                             car.getImage().setLayoutX(0);
                             car.getImage().setLayoutY(0);
                             move.play();
-                            end = true;
                             TimeUnit.MILLISECONDS.sleep(1500);
                         }
 
