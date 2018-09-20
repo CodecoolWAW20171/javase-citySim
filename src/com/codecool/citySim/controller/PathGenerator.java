@@ -1,6 +1,7 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Simulation;
+import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.roads.Road;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -13,6 +14,7 @@ class PathGenerator {
 
     private Simulation roadsLists = new Simulation();
     private Road[] secondRoads = roadsLists.getSecondRoads();
+    Road chosenRoad;
     private Random rand = new Random();
     Path newTurn = new Path();
     private double roadEndX;
@@ -22,8 +24,8 @@ class PathGenerator {
     private double chosenStartY;
     private double chosenEndY;
 
-    PathGenerator(Road road) {
-        Road chosenRoad = chooseRoad();
+    PathGenerator(Car car, Road road) {
+        this.chosenRoad = chooseRoad();
         double roadStartX = road.getStartX();
         roadEndX = road.getEndX();
         double roadStartY = road.getStartY();
@@ -33,8 +35,9 @@ class PathGenerator {
         chosenStartY = chosenRoad.getStartY();
         chosenEndY = chosenRoad.getEndY();
         if (chosenEndX != roadStartX && chosenEndY != roadStartY) {
-            MoveTo getToStartOfTurn = new MoveTo(roadEndX, roadEndY);
-            newTurn.getElements().add(getToStartOfTurn);
+            MoveTo getToStartOfTurn = new MoveTo(car.getX(), car.getY());
+            LineTo getToTurn = new LineTo(roadEndX, roadEndY);
+            newTurn.getElements().addAll(getToStartOfTurn, getToTurn);
             checkNextTurn();
         }
     }
