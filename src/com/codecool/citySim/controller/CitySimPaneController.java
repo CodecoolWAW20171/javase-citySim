@@ -1,68 +1,92 @@
 package com.codecool.citySim.controller;
 
+import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.PathTransition;
-import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.*;
 import javafx.util.Duration;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
-public class CitySimPaneController implements Initializable {
+public class CitySimPaneController {
     @FXML
     public Pane pane;
+    private Simulation sim = new Simulation();
 
-    public Road horizontalRightFirst;
-    public Road horizontalRightSecond;
-    public QuadCurve leftRightTurn;
-    public QuadCurve leftLeftTurn;
-    public Road leftStraight;
+    public void initialize() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                    if (sim.getVehicles() < 10)
+                        carGenerator();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (NullPointerException e) {
+                    System.out.println("Generowanie");
+                }
+            }
+        }).start();
+    }
 
-    public Road horizontalLeftFirst;
-    public Road horizontalLeftSecond;
-    public QuadCurve rightRightTurn;
-    public QuadCurve rightLeftTurn;
-    public Road rightStraight;
+    private void carGenerator() {
+        Random random = new Random();
 
-    public Road verticalDownFirst;
-    public Road verticalDownSecond;
-    public QuadCurve downRightTurn;
-    public QuadCurve downLeftTurn;
-    public Road downStraight;
+        if (random.nextInt(100) < 50) {
+            new Thread(() -> {
+                sim.setVehicles(sim.getVehicles() + 1);
+                Road road = sim.getFirstRoads()[random.nextInt(4)];
+                Car car = new Car(road.getStartX(), road.getStartY());
+                Platform.runLater(() -> pane.getChildren().add(car.getImage()));
+                VehicleController vc = new VehicleController(car, road);
+                boolean end = false;
 
-    public Road verticalUpFirst;
-    public Road verticalUpSecond;
-    public QuadCurve upRightTurn;
-    public QuadCurve upLeftTurn;
-    public Road upStraight;
+                try {
+                    while (car.getImage() != null) {
+                        vc.moveTheCar();
+                        vc.setCarsXY(car);
+                        TimeUnit.MILLISECONDS.sleep(1000);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Car car = new Car(8, 8);
-        pane.getChildren().add(car);
+                        if (    !end &&
+                                Math.abs(car.getX() - road.getEndX()) < 45 &&
+                                Math.abs(car.getY() - road.getEndY()) < 45 &&
+                                car.equals(road.getVehicles().getFirst())
+                        ) {
+                            if (end) {
+                                sim.setVehicles(sim.getVehicles() - 1);
+                                vc.getBasicRoad().getVehicles().remove(car);
+                                Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
+                                break;
+                            }
+                            end = true;
+                            PathGenerator pathGenerator = new PathGenerator(car, road);
+                            PathTransition move = new PathTransition(Duration.seconds(2), pathGenerator.newTurn, car.getImage());
+                            move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+                            road = pathGenerator.chosenRoad;
+                            vc.setBasicRoad(road);
+                            car.getImage().setLayoutX(0);
+                            car.getImage().setLayoutY(0);
+                            move.play();
+                            end = true;
+                            TimeUnit.MILLISECONDS.sleep(1500);
+                        }
 
-        Path path = new Path();
-        MoveTo moveFrom = new MoveTo(-8, 8);
-        path.getElements().add(moveFrom);
-        path.getElements().add(new QuadCurveTo(upLeftTurn.getControlX(), upLeftTurn.getControlY(),
-                upLeftTurn.getEndX(), upLeftTurn.getEndY()));
-        path.getElements().add(new LineTo(-100, -8));
-
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(1000));
-        pathTransition.setNode(car);
-        pathTransition.setPath(path);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(2000), car);
-        translateTransition.setByX(200);
-        translateTransition.play();
-
-        pathTransition.play();
+                        if ( end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 20 &&
+                                Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < 20 &&
+                                        car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
+                            vc.getBasicRoad().getVehicles().remove(car);
+                            Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
+                            break;
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 }
