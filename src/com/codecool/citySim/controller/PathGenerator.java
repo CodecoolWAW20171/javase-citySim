@@ -36,7 +36,6 @@ class PathGenerator {
         chosenEndY = chosenRoad.getEndY();
         while (chosenEndX == roadStartX && chosenEndY == (-1) * roadStartY ||
                 chosenEndY == roadStartY && chosenEndX == (-1) * roadStartX) {
-            System.out.println("KURWA");
             chosenRoad = chooseRoad();
             chosenStartX = chosenRoad.getStartX();
             chosenEndX = chosenRoad.getEndX();

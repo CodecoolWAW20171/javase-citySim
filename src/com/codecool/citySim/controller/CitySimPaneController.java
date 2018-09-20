@@ -55,14 +55,14 @@ public class CitySimPaneController {
                                 car.equals(vc.getBasicRoad().getVehicles().getFirst())
                         ) {
                             PathGenerator pathGenerator = new PathGenerator(car, road);
-                            PathTransition move = new PathTransition(Duration.seconds(1), pathGenerator.newTurn, car.getImage());
+                            PathTransition move = new PathTransition(Duration.seconds(2), pathGenerator.newTurn, car.getImage());
                             System.out.println(pathGenerator.newTurn);
                             move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                             vc.setBasicRoad(pathGenerator.chosenRoad);
                             car.getImage().setLayoutX(0);
                             car.getImage().setLayoutY(0);
                             move.play();
-                            TimeUnit.MILLISECONDS.sleep(1100);
+                            TimeUnit.MILLISECONDS.sleep(2100);
                         }
                     }
                 } catch (InterruptedException e) {
@@ -71,33 +71,4 @@ public class CitySimPaneController {
             }).start();
         }
     }
-
 }
-//                    while (road.getVehicles().contains(car)) {
-//                        vc.moveTheCar();
-//                        vc.setCarsXY(car);
-//                        TimeUnit.MILLISECONDS.sleep(1000);
-//                        if (
-//                                Math.abs(car.getX() - road.getEndX()) < 45 &&
-//                                Math.abs(car.getY() - road.getEndY()) < 45 &&
-//                                car.equals(road.getVehicles().getFirst())
-//                        ) {
-//                            road.getVehicles().remove(car);
-//                            PathGenerator pathGenerator = new PathGenerator(car, road);
-//                            PathTransition move = new PathTransition(Duration.seconds(1), pathGenerator.newTurn, car.getImage());
-//                            move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-//                            move.setOnFinished(e -> {
-//                                Road secRoad = pathGenerator.chosenRoad;
-//                                vc.setBasicRoad(secRoad);
-//                                while (secRoad.getVehicles().contains(car)) {
-//                                    vc.moveTheCar();
-//                                    vc.setCarsXY(car);
-//                                    try {
-//                                        TimeUnit.MILLISECONDS.sleep(1000);
-//                                    } catch (InterruptedException e1) {
-//                                        e1.printStackTrace();
-//                                    }
-//                                }
-//                            });
-//                            move.play();
-//                        }
