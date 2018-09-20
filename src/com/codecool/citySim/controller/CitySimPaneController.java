@@ -87,6 +87,7 @@ public class CitySimPaneController {
                                 Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < distanceToTheEdgeOfPane &&
                                 car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
                             vc.getBasicRoad().getVehicles().remove(car);
+                            sim.setVehicles(sim.getVehicles() - 1);
                             Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
                             break;
                         }
