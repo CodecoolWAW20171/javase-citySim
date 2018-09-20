@@ -48,7 +48,7 @@ public class CitySimPaneController {
             Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
 
             new Thread(() -> {
-                VehicleController vc = new VehicleController(car, road);
+                VehicleController vc = new VehicleController(car, road, crossRoadLights);
                 while (road.getVehicles().indexOf(car) != -1) {
                     try {
                         vc.moveTheCar();
