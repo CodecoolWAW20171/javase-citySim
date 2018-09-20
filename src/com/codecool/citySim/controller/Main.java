@@ -10,14 +10,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SoundController souondController = new SoundController();
+
         Pane pane = FXMLLoader.load(getClass().getResource("../view/citySimPane.fxml"));
 
         Scene scene = new Scene(pane, 1280, 720);
         primaryStage.setTitle("CitySim");
         primaryStage.setScene(scene);
         primaryStage.show();
-        souondController.playTraffic.play();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
     }
 

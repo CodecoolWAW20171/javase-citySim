@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class CitySimPaneController {
     @FXML
     public Pane pane;
+    private SoundController souondController = new SoundController();
     private Simulation sim = new Simulation();
     private CrossRoadLights crossRoadLights;
     private LightController lightController;
@@ -31,6 +32,7 @@ public class CitySimPaneController {
 
         new Thread(() -> {
             while (true) {
+                souondController.playTraffic.play();
                 try {
                     TimeUnit.SECONDS.sleep(1);
                     if (sim.getVehicles() < 10)
