@@ -146,7 +146,5 @@ class VehicleController {
         return basicRoad;
     }
 
-    public void setBasicRoad(Road basicRoad) {
-        this.basicRoad = basicRoad;
-    }
+    public void setBasicRoad(Road basicRoad) { this.basicRoad = basicRoad; }
 }
