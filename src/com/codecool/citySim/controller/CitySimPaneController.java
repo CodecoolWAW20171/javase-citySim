@@ -26,11 +26,15 @@ public class CitySimPaneController {
     public void initialize() {
         crossRoadLights = new CrossRoadLights();
         lightController = new LightController(pane, crossRoadLights);
+
+        Thread thread = new Thread(lightController);
+        thread.start();
+
         Car car = new Car(road1.getStartX(), road1.getStartY());
-        VehicleController movingCar = new VehicleController(car, road1);
+        VehicleController movingCar = new VehicleController(car, road1, crossRoadLights);
         pane.getChildren().addAll(car.getImage());
 
-        PathTransition pathTransition = new PathTransition(Duration.seconds(3), pathy.newTurn, car.getImage());
+        PathTransition pathTransition = new PathTransition(Duration.seconds(3), pathy.newTurn , car.getImage());
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
         pathTransition.setOnFinished(event -> new Thread(() -> {
