@@ -34,12 +34,18 @@ class PathGenerator {
         chosenEndX = chosenRoad.getEndX();
         chosenStartY = chosenRoad.getStartY();
         chosenEndY = chosenRoad.getEndY();
-        if (chosenEndX != roadStartX && chosenEndY != roadStartY) {
-            MoveTo getToStartOfTurn = new MoveTo(car.getX(), car.getY());
-            LineTo getToTurn = new LineTo(roadEndX, roadEndY);
-            newTurn.getElements().addAll(getToStartOfTurn, getToTurn);
-            checkNextTurn();
+        while (chosenEndX == roadStartX && chosenEndY == (-1) * roadStartY ||
+                chosenEndY == roadStartY && chosenEndX == (-1) * roadStartX) {
+            chosenRoad = chooseRoad();
+            chosenStartX = chosenRoad.getStartX();
+            chosenEndX = chosenRoad.getEndX();
+            chosenStartY = chosenRoad.getStartY();
+            chosenEndY = chosenRoad.getEndY();
         }
+        MoveTo getToStartOfTurn = new MoveTo(car.getX(), car.getY());
+        LineTo getToTurn = new LineTo(roadEndX, roadEndY);
+        newTurn.getElements().addAll(getToStartOfTurn, getToTurn);
+        checkNextTurn();
     }
 
     private void checkNextTurn() {
@@ -83,7 +89,7 @@ class PathGenerator {
     }
 
     private Road chooseRoad() {
-        return secondRoads[rand.nextInt(3)];
+        return secondRoads[rand.nextInt(4)];
     }
 
 }

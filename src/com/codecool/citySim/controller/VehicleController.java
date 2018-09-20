@@ -187,6 +187,7 @@ class VehicleController {
     }
 
     public void setBasicRoad(Road basicRoad) {
+        this.basicRoad.getVehicles().remove(basicCar);
         basicRoad.getVehicles().add(basicCar);
         this.basicRoad = basicRoad;
     }
