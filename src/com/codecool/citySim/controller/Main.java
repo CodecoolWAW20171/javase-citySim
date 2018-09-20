@@ -10,6 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         Pane pane = FXMLLoader.load(getClass().getResource("../view/citySimPane.fxml"));
 
         Scene scene = new Scene(pane, 1280, 720);
