@@ -2,9 +2,7 @@ package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Vehicle;
 import com.codecool.citySim.model.roads.Road;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
-import javafx.util.Duration;
+import com.codecool.citySim.view.VehicleView;
 
 import java.util.LinkedList;
 
@@ -13,7 +11,6 @@ class VehicleController {
     private double moveOfAxis;
     private boolean axis;
     private boolean isSecondRoad;
-    private TranslateTransition moveInAStraightLine;
     private Vehicle basicCar;
     private Road basicRoad;
 
@@ -22,12 +19,10 @@ class VehicleController {
         if (road.getStartX() == 640) car.getImage().setRotate(180);
         if (road.getStartX() == 8) car.getImage().setRotate(270);
         if (road.getStartX() == -8) car.getImage().setRotate(90);
-
-        if (!road.getVehicles().contains(car)) {
-            road.getVehicles().add(car);
-        }
         car.getImage().setX(car.getX());
         car.getImage().setY(car.getY());
+
+        if (!road.getVehicles().contains(car)) { road.getVehicles().add(car); }
         basicCar = car;
         basicRoad = road;
     }
@@ -93,8 +88,6 @@ class VehicleController {
             currentSpeed = basicCar.getSpeed();
         }
 
-        //create animation for basicCar movement, assign cars Image View to it
-        moveInAStraightLine = new TranslateTransition(Duration.millis(1000), basicCar.getImage());
         //check if basicRoad is moving in X or Y axis
         if (axis) {
             //check if basicCar is moving left or right on its axis
@@ -110,13 +103,12 @@ class VehicleController {
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
-
+        //ser Image for the moving car
+        VehicleView carImage = new VehicleView(basicCar);
         //set by how far basicCar is supposed to move in TranslateTransition
-        setCarMovement(axis, moveOfAxis);
-        //remove acceleration and braking in one step
-        moveInAStraightLine.setInterpolator(Interpolator.LINEAR);
-        //move the basicCar
-        moveInAStraightLine.play();
+        moveOfAxis = carImage.setCarMovement(axis, moveOfAxis, isSecondRoad);
+        //run the animation
+        carImage.startCarImage();
     }
 
     //speed of a car is converted from km/h to m/s and then divided by 5, because 1m in app is 5px
@@ -129,20 +121,6 @@ class VehicleController {
     //calculate distance between objects by their positions in one axis
     private double getSpeedByAxisDifference(double pos1, double pos2) {
         return Math.abs(pos1 - pos2) / 2;
-    }
-
-    //set on which axis car is moving, also how far
-    private void setCarMovement(boolean axis, double value) {
-        if (!isSecondRoad) {
-            int minDist = 15;
-            int stop = 0;
-            if (Math.abs(value) < minDist) { value = stop; moveOfAxis = stop; }
-        }
-        if (axis) {
-            moveInAStraightLine.setByX(value);
-        } else {
-            moveInAStraightLine.setByY(value);
-        }
     }
 
     //TranslateTransition doesn't save the cars position it has to be saved manually from the game loop
@@ -160,8 +138,8 @@ class VehicleController {
 
     void setBasicRoad(Road basicRoad) {
         this.basicRoad.getVehicles().remove(basicCar);
-        basicRoad.getVehicles().add(basicCar);
         this.basicRoad = basicRoad;
+        basicRoad.getVehicles().add(basicCar);
         this.isSecondRoad = true;
     }
 }
