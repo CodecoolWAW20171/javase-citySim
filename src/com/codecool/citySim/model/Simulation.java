@@ -3,6 +3,7 @@ package com.codecool.citySim.model;
 import com.codecool.citySim.model.roads.Road;
 
 public class Simulation {
+    private int vehicles = 0;
     private Road[] firstRoads = {
             new Road(-640, 8, -16, 8),
             new Road(640, -8, 16, -8),
@@ -22,5 +23,13 @@ public class Simulation {
 
     public Road[] getSecondRoads() {
         return secondRoads;
+    }
+
+    public int getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(int vehicles) {
+        this.vehicles = vehicles;
     }
 }
