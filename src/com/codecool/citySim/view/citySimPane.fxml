@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<Pane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/10.0.1"
+<?import javafx.scene.shape.*?>
+<Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       stylesheets="@/css/style.css" styleClass="scene">
 <Pane layoutX="640" layoutY="360" fx:id="pane" prefHeight="600" prefWidth="800">
 
-</Pane>
+        <Rectangle fx:id="horizontalLightUp" fill="green" translateX="-35" translateY="-25" width="20" height="10"/>
+        <Rectangle fx:id="horizontalLightDown" fill="green" translateX="15" translateY="15" width="20" height="10"/>
+        <Rectangle fx:id="verticalLightRight" fill="red" translateX="15" translateY="-35" width="10" height="20"/>
+        <Rectangle fx:id="verticalLightLeft" fill="red" translateX="-25" translateY="15" width="10" height="20"/>
+    </Pane>
 </Pane>

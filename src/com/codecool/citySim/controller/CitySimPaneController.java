@@ -2,6 +2,7 @@ package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
+import com.codecool.citySim.model.lights.CrossRoadLights;
 import com.codecool.citySim.model.roads.Road;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
@@ -16,6 +17,15 @@ public class CitySimPaneController {
     @FXML
     public Pane pane;
     private Simulation sim = new Simulation();
+
+    private CrossRoadLights crossRoadLights = new CrossRoadLights();
+    private LightController lightController = new LightController(pane, crossRoadLights);
+
+    Thread thread;
+
+    {
+        new Thread(lightController).start();
+    }
 
     public void initialize() {
         new Thread(() -> {
@@ -42,7 +52,7 @@ public class CitySimPaneController {
                 Road road = sim.getFirstRoads()[random.nextInt(4)];
                 Car car = new Car(road.getStartX(), road.getStartY());
                 Platform.runLater(() -> pane.getChildren().add(car.getImage()));
-                VehicleController vc = new VehicleController(car, road);
+                VehicleController vc = new VehicleController(car, road, crossRoadLights);
                 boolean end = false;
 
                 try {
@@ -51,7 +61,7 @@ public class CitySimPaneController {
                         vc.setCarsXY(car);
                         TimeUnit.MILLISECONDS.sleep(1000);
 
-                        if (    !end &&
+                        if (!end &&
                                 Math.abs(car.getX() - road.getEndX()) < 45 &&
                                 Math.abs(car.getY() - road.getEndY()) < 45 &&
                                 car.equals(road.getVehicles().getFirst())
@@ -68,9 +78,9 @@ public class CitySimPaneController {
                             TimeUnit.MILLISECONDS.sleep(1500);
                         }
 
-                        if ( end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 20 &&
+                        if (end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 20 &&
                                 Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < 20 &&
-                                        car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
+                                car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
                             vc.getBasicRoad().getVehicles().remove(car);
                             Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
                             break;

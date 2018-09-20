@@ -1,6 +1,8 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.Vehicle;
+import com.codecool.citySim.model.lights.CrossRoadLights;
+import com.codecool.citySim.model.lights.Light;
 import com.codecool.citySim.model.roads.Road;
 import com.codecool.citySim.view.VehicleView;
 
@@ -13,9 +15,10 @@ class VehicleController {
     private boolean isSecondRoad;
     private Vehicle basicCar;
     private Road basicRoad;
+    private CrossRoadLights crossRoadLights;
 
-    //Check if car is in the given roads List of vehicles, if not add it.
-    VehicleController(Vehicle car, Road road) {
+    VehicleController(Vehicle car, Road road, CrossRoadLights crossRoadLights) {
+        this.crossRoadLights = crossRoadLights;
         //set carImage rotation and position
         VehicleView.setCarImageRotation(car, road);
         //add car to a roads list of vehicles if it doesn't have it
@@ -89,14 +92,22 @@ class VehicleController {
         if (axis) {
             //check if basicCar is moving left or right on its axis
             if (roadStartY > 0) {
+                //System.out.println("W prawo verticalLightLeft");
+                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
+                //System.out.println("W lewo verticalLightRight");
+                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
             if (roadStartX < 0) {
+                //System.out.println("Do dołu");
+                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
+                //System.out.println("Do góry");
+                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
@@ -106,6 +117,32 @@ class VehicleController {
         moveOfAxis = carImage.setCarMovement(axis, moveOfAxis, isSecondRoad);
         //run the animation
         carImage.startCarImage();
+    }
+
+    private double checkLights() {
+        if (axis) {
+            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 70) {
+                checkTheLight("verticalLightLeft");
+            } else {
+                basicCar.setSpeed(basicCar.getSpeed());
+            }
+        } else {
+            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 70) {
+                checkTheLight("horizontalLightUp");
+            } else {
+                basicCar.setSpeed(basicCar.getSpeed());
+            }
+        }
+        return basicCar.getSpeed();
+    }
+
+    private void checkTheLight(String lightId) {
+        Light horizontalLight = crossRoadLights.getLights().get(lightId);
+        if (horizontalLight.isGreen()) {
+            basicCar.setSpeed(basicCar.getSpeed());
+        } else {
+            basicCar.setSpeed(0);
+        }
     }
 
     //speed of a car is converted from km/h to m/s and then divided by 5, because 1m in app is 5px
