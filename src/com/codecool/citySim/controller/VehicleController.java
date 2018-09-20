@@ -16,12 +16,9 @@ class VehicleController {
 
     //Check if car is in the given roads List of vehicles, if not add it.
     VehicleController(Vehicle car, Road road) {
-        if (road.getStartX() == 640) car.getImage().setRotate(180);
-        if (road.getStartX() == 8) car.getImage().setRotate(270);
-        if (road.getStartX() == -8) car.getImage().setRotate(90);
-        car.getImage().setX(car.getX());
-        car.getImage().setY(car.getY());
-
+        //set carImage rotation and position
+        VehicleView.setCarImageRotation(car, road);
+        //add car to a roads list of vehicles if it doesn't have it
         if (!road.getVehicles().contains(car)) { road.getVehicles().add(car); }
         basicCar = car;
         basicRoad = road;
