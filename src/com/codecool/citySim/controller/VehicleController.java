@@ -55,7 +55,7 @@ class VehicleController {
         axis = !(roadStartX == roadEndX);
 
         //Check if there is a vehicle in front of our basicCar
-        if (vehiclesList.indexOf(basicCar) -1 >= 0) {
+        if (vehiclesList.indexOf(basicCar) - 1 >= 0) {
             //add name to the vehicle in front of our basicCar
             Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(basicCar) - 1);
             //Assign position X and Y of a vehicle in front of our basicCar to variables
@@ -93,16 +93,22 @@ class VehicleController {
         if (axis) {
             //check if basicCar is moving left or right on its axis
             if (roadStartY > 0) {
+                //System.out.println("W prawo verticalLightLeft");
+                currentSpeed = checkLights(-60, 0);
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
+                //System.out.println("W lewo verticalLightRight");
+                currentSpeed = checkLights(60, 0);
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
             if (roadStartX < 0) {
-                currentSpeed = checkHorizontalLight(crossRoadLights, basicCar, -60, 0, "verticalLightLeft");
+                //System.out.println("Do dołu");
+                currentSpeed = checkLights(-60, 0);
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                currentSpeed = checkHorizontalLight(crossRoadLights, basicCar, 0, 60, "verticalLightRight");
+                //System.out.println("Do góry");
+                currentSpeed = checkLights(60, 0);
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
@@ -115,20 +121,31 @@ class VehicleController {
         moveInAStraightLine.play();
     }
 
-    private double checkHorizontalLight(CrossRoadLights crossRoadLights, Vehicle car, double startLightSphere, double endLightSphere,  String lightId ) {
-        Light verticalLightLeft = crossRoadLights.getLights().get(lightId);
-        if (car.getX() > startLightSphere && car.getX() < endLightSphere) {
-            System.out.println("sprawdz swiatło " + verticalLightLeft.isGreen());
-            if (verticalLightLeft.isGreen()) {
-                car.setSpeed(/*car.getMaxSpeed()*/ 10);
-            } else {
-                car.setSpeed(0);
+    private double checkLights(double startLightSphere, double endLightSphere) {
+        if (axis) {
+            if ((basicCar.getX() > startLightSphere && basicCar.getX() < endLightSphere) || (basicCar.getX() < startLightSphere && basicCar.getX() > endLightSphere)) {
+                checkTheLight("verticalLightRight");
             }
-
         } else {
+            if ((basicCar.getY() > startLightSphere && basicCar.getY() < endLightSphere) || (basicCar.getY() < startLightSphere && basicCar.getY() > endLightSphere)) {
+                checkTheLight("horizontalLightUp");
+            }
         }
-        return car.getSpeed();
+        return basicCar.getSpeed();
     }
+
+    private void checkTheLight(String lightId) {
+        Light horizontalLight = crossRoadLights.getLights().get(lightId);
+        System.out.println("sprawdzam swiatło");
+        if (horizontalLight.isGreen()) {
+            basicCar.setSpeed(basicCar.getSpeed());
+            System.out.println("GO");
+        } else {
+            basicCar.setSpeed(0);
+            System.out.println("STOP");
+        }
+    }
+
     //speed of a car is converted from km/h to m/s and then divided by 5, because 1m in app is 5px
     private double convertSpeedToPixels(double speed) {
         double KMHtoMS = 0.27778;
@@ -145,7 +162,10 @@ class VehicleController {
     private void setCarMovement(boolean axis, double value) {
         int minDist = 15;
         int stop = 0;
-        if (Math.abs(value) < minDist) { value = stop; moveOfAxis = stop; }
+        if (Math.abs(value) < minDist) {
+            value = stop;
+            moveOfAxis = stop;
+        }
         if (axis) {
             moveInAStraightLine.setByX(value);
         } else {
