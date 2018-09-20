@@ -50,10 +50,11 @@ public class CitySimPaneController {
                         vc.moveTheCar();
                         vc.setCarsXY(car);
                         TimeUnit.MILLISECONDS.sleep(1000);
-                        if (
-                                Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 45 &&
-                                Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < 45 &&
-                                car.equals(vc.getBasicRoad().getVehicles().getFirst())
+
+                        if (    !end &&
+                                Math.abs(car.getX() - road.getEndX()) < 45 &&
+                                Math.abs(car.getY() - road.getEndY()) < 45 &&
+                                car.equals(road.getVehicles().getFirst())
                         ) {
                             if (end) {
                                 sim.setVehicles(sim.getVehicles() - 1);
@@ -63,14 +64,23 @@ public class CitySimPaneController {
                             }
                             end = true;
                             PathGenerator pathGenerator = new PathGenerator(car, road);
-                            PathTransition move = new PathTransition(Duration.seconds(3), pathGenerator.newTurn, car.getImage());
+                            PathTransition move = new PathTransition(Duration.seconds(2), pathGenerator.newTurn, car.getImage());
                             move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                             road = pathGenerator.chosenRoad;
                             vc.setBasicRoad(road);
                             car.getImage().setLayoutX(0);
                             car.getImage().setLayoutY(0);
                             move.play();
+                            end = true;
                             TimeUnit.MILLISECONDS.sleep(1500);
+                        }
+
+                        if ( end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 20 &&
+                                Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < 20 &&
+                                        car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
+                            vc.getBasicRoad().getVehicles().remove(car);
+                            Platform.runLater(() -> pane.getChildren().remove(car.getImage()));
+                            break;
                         }
                     }
                 } catch (InterruptedException e) {
