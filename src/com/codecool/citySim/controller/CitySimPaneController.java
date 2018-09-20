@@ -14,20 +14,25 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CitySimPaneController {
+
     @FXML
     public Pane pane;
+
     private Simulation sim = new Simulation();
 
-    private CrossRoadLights crossRoadLights = new CrossRoadLights();
-    private LightController lightController = new LightController(pane, crossRoadLights);
+    private CrossRoadLights crossRoadLights;
+    private LightController lightController;
 
-    Thread thread;
+    private Thread thread;
 
-    {
-        new Thread(lightController).start();
-    }
 
     public void initialize() {
+
+        crossRoadLights = new CrossRoadLights();
+        lightController = new LightController(pane, crossRoadLights);
+        thread = new Thread(lightController);
+        thread.start();
+
         new Thread(() -> {
             while (true) {
                 try {
