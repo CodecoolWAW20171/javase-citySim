@@ -21,20 +21,17 @@ public class CitySimPaneController {
     private Simulation sim = new Simulation();
 
     private CrossRoadLights crossRoadLights;
-    private LightController lightController;
-
-    private Thread thread;
 
 
     public void initialize() {
 
         crossRoadLights = new CrossRoadLights();
-        lightController = new LightController(pane, crossRoadLights);
-        thread = new Thread(lightController);
+        LightController lightController = new LightController(pane, crossRoadLights);
+        Thread thread = new Thread(lightController);
         thread.start();
 
         new Thread(() -> {
-            while (true) {
+            while (thread.isAlive()) {
                 souondController.playTraffic.play();
                 try {
                     TimeUnit.SECONDS.sleep(1);
@@ -94,10 +91,8 @@ public class CitySimPaneController {
                             break;
                         }
                     }
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | NullPointerException e) {
                     e.printStackTrace();
-                } catch (NullPointerException nul) {
-                    nul.printStackTrace();
                 }
             }).start();
         }

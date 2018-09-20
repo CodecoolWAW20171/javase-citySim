@@ -1,12 +1,10 @@
 package com.codecool.citySim.controller;
 
 import com.codecool.citySim.model.lights.CrossRoadLights;
-import com.codecool.citySim.model.lights.Light;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class LightController implements Runnable {
@@ -15,10 +13,10 @@ public class LightController implements Runnable {
     private CrossRoadLights crossRoadLights;
     private long timeOfLight;
 
-    public LightController(Pane pane, CrossRoadLights crossRoadLights) {
+    LightController(Pane pane, CrossRoadLights crossRoadLights) {
         this.pane = pane;
         this.crossRoadLights = crossRoadLights;
-        setTimeOfLight(5000);
+        this.timeOfLight = 5000;
     }
 
     @Override
@@ -33,12 +31,6 @@ public class LightController implements Runnable {
                 if (isGreen) {
                     verticalLightRightRect.setFill(Color.GREEN);
                 } else {
-                    verticalLightRightRect.setFill(Color.ORANGE);
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException e) {
-                        return;
-                    }
                     verticalLightRightRect.setFill(Color.RED);
                 }
             }
@@ -51,11 +43,7 @@ public class LightController implements Runnable {
         }
     }
 
-    public long getTimeOfLight() {
+    private long getTimeOfLight() {
         return timeOfLight;
-    }
-
-    public void setTimeOfLight(long timeOfLight) {
-        this.timeOfLight = timeOfLight;
     }
 }

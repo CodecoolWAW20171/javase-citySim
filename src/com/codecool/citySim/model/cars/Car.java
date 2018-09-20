@@ -15,7 +15,6 @@ public class Car extends Vehicle {
         this.getImage().setLayoutX(-11);
         this.getImage().setLayoutY(-5);
         this.setMaxSpeed((new Random().nextInt(20)) + 40);
-        this.setMinDist(10);
     }
 
 }
