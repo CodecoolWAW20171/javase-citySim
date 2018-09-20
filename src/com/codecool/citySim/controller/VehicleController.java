@@ -14,6 +14,7 @@ class VehicleController {
 
     private double moveOfAxis;
     private boolean axis;
+    private boolean isSecondRoad;
     private TranslateTransition moveInAStraightLine;
     private Vehicle basicCar;
     private Road basicRoad;
@@ -55,7 +56,7 @@ class VehicleController {
         axis = !(roadStartX == roadEndX);
 
         //Check if there is a vehicle in front of our basicCar
-        if (vehiclesList.indexOf(basicCar) - 1 >= 0) {
+        if (vehiclesList.indexOf(basicCar) -1 >= 0) {
             //add name to the vehicle in front of our basicCar
             Vehicle nextVehicle = vehiclesList.get(vehiclesList.indexOf(basicCar) - 1);
             //Assign position X and Y of a vehicle in front of our basicCar to variables
@@ -73,9 +74,15 @@ class VehicleController {
             //check if basicCar is moving in X or Y axis
             if (axis) {
                 //set basicCar speed so that it keeps distance = 2*speed from the crossroad
+                if (isSecondRoad) {
+                    basicCar.setSpeed(getSpeedByAxisDifference(carX + 500, roadEndX));
+                }
                 basicCar.setSpeed(getSpeedByAxisDifference(carX, roadEndX));
             } else {
                 basicCar.setSpeed(getSpeedByAxisDifference(carY, roadEndY));
+                if (isSecondRoad) {
+                    basicCar.setSpeed(getSpeedByAxisDifference(carY + 500, roadEndY));
+                }
             }
         }
 
@@ -159,13 +166,12 @@ class VehicleController {
         return Math.abs(pos1 - pos2) / 2;
     }
 
-    //set on which axis car is moving, also how far and which way
+    //set on which axis car is moving, also how far
     private void setCarMovement(boolean axis, double value) {
-        int minDist = 15;
-        int stop = 0;
-        if (Math.abs(value) < minDist) {
-            value = stop;
-            moveOfAxis = stop;
+        if (!isSecondRoad) {
+            int minDist = 15;
+            int stop = 0;
+            if (Math.abs(value) < minDist) { value = stop; moveOfAxis = stop; }
         }
         if (axis) {
             moveInAStraightLine.setByX(value);
@@ -183,13 +189,14 @@ class VehicleController {
         }
     }
 
-    public Road getBasicRoad() {
+    Road getBasicRoad() {
         return basicRoad;
     }
 
-    public void setBasicRoad(Road basicRoad) {
+    void setBasicRoad(Road basicRoad) {
         this.basicRoad.getVehicles().remove(basicCar);
         basicRoad.getVehicles().add(basicCar);
         this.basicRoad = basicRoad;
+        this.isSecondRoad = true;
     }
 }

@@ -34,8 +34,9 @@ class PathGenerator {
         chosenEndX = chosenRoad.getEndX();
         chosenStartY = chosenRoad.getStartY();
         chosenEndY = chosenRoad.getEndY();
-        while (chosenEndX == roadStartX && chosenEndY == (-1) * roadStartY ||
-                chosenEndY == roadStartY && chosenEndX == (-1) * roadStartX) {
+        while ((Math.abs(roadStartX - chosenEndX) == 0 && Math.abs(roadStartY - chosenEndY) == 16) ||
+                (Math.abs(roadStartY - chosenEndY) == 0 && Math.abs(roadStartX - chosenEndX) == 16)
+        ) {
             chosenRoad = chooseRoad();
             chosenStartX = chosenRoad.getStartX();
             chosenEndX = chosenRoad.getEndX();
@@ -52,18 +53,19 @@ class PathGenerator {
         int diffX = (int) Math.abs(Math.abs(roadEndX) - Math.abs(chosenStartX));
         int diffY = (int) Math.abs(Math.abs(roadEndY) - Math.abs(chosenStartY));
         int controlX, controlY;
-        int CONTROL_TURN = 7;
+        int CONTROL_TURN_RIGHT = 7;
         int RIGHT_TURN_DIFF = 8;
         int LEFT_TURN_DIFF = 24;
         int VEHICLE_STRAIGHTENING_MOVEMENT = 8;
         if (diffX == RIGHT_TURN_DIFF && diffY == RIGHT_TURN_DIFF) {
-            controlX = chosenStartX > 0 ? CONTROL_TURN : -CONTROL_TURN;
-            controlY = chosenStartY > 0 ? CONTROL_TURN : -CONTROL_TURN;
+            controlX = chosenStartX > 0 ? CONTROL_TURN_RIGHT : -CONTROL_TURN_RIGHT;
+            controlY = chosenStartY > 0 ? CONTROL_TURN_RIGHT : -CONTROL_TURN_RIGHT;
             QuadCurveTo nextMove = new QuadCurveTo(controlX, controlY, chosenStartX, chosenStartY);
             newTurn.getElements().add(nextMove);
         } else if (diffX == LEFT_TURN_DIFF && diffY == LEFT_TURN_DIFF) {
-            controlY = chosenStartX > 0 ? CONTROL_TURN : -CONTROL_TURN;
-            controlX = chosenStartY > 0 ? -CONTROL_TURN : CONTROL_TURN;
+            int CONTROL_TURN_LEFT = 1;
+            controlY = chosenStartX > 0 ? CONTROL_TURN_LEFT : -CONTROL_TURN_LEFT;
+            controlX = chosenStartY > 0 ? -CONTROL_TURN_LEFT : CONTROL_TURN_LEFT;
             QuadCurveTo nextMove = new QuadCurveTo(controlX, controlY, chosenStartX, chosenStartY);
             newTurn.getElements().add(nextMove);
         } else {
