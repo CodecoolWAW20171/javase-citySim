@@ -5,45 +5,7 @@
 <Pane prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.citySim.controller.CitySimPaneController"
       stylesheets="@/css/style.css" styleClass="scene">
-<Pane layoutX="640" layoutY="360" fx:id="pane" prefHeight="720" prefWidth="1280">
-
-      <!--Crossroad-->
-      <Path fx:id="righToUpTurn">
-            <elements>
-                  <MoveTo x="-16" y="8" />
-                  <QuadCurveTo controlX="-1.0" controlY="-1.0" x="8" y="-16" />
-                  <MoveTo x="8" y="-16" />
-            </elements>
-      </Path>
-      <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7"
-                 styleClass="turn"/>
-      <Line fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
-
-      <Path fx:id="path2">
-            <elements>
-                  <MoveTo x="16" y="-8" />
-                  <QuadCurveTo controlX="1.0" controlY="1.0" x="-8" y="16" />
-            </elements>
-      </Path>
-      <QuadCurve fx:id="leftRightTurn" startX="16" endX="8" startY="-8" endY="-16" controlX="7" controlY="-7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="leftLeftTurn" startX="16" endX="-8" startY="-8" endY="16" controlX="-7" controlY="-7"
-                 styleClass="turn"/>
-      <Line fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
-
-      <QuadCurve fx:id="upRightTurn" endX="16" endY="8" startX="8" startY="16" controlX="7" controlY="7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="upLeftTurn" endX="-16" endY="-8" startX="8" startY="16" controlX="7" controlY="-7"
-                 styleClass="turn"/>
-      <Line fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
-
-      <QuadCurve fx:id="downRightTurn" startX="-8" endX="-16" startY="-16" endY="-8" controlX="-7" controlY="-7"
-                 styleClass="turn"/>
-      <QuadCurve fx:id="downLeftTurn" startX="-8" endX="16" startY="-16" endY="8" controlX="-7" controlY="7"
-                 styleClass="turn"/>
-      <Line fx:id="downStraight" startX="-8" endX="-8" startY="-16" endY="16" />
+<Pane layoutX="640" layoutY="360" fx:id="pane" prefHeight="600" prefWidth="800">
 
         <Rectangle fx:id="horizontalLightUp" fill="green" translateX="-35" translateY="-25" width="20" height="10"/>
         <Rectangle fx:id="horizontalLightDown" fill="green" translateX="15" translateY="15" width="20" height="10"/>
