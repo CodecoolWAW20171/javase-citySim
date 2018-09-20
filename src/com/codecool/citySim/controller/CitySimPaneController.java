@@ -4,11 +4,14 @@ import com.codecool.citySim.model.Simulation;
 import com.codecool.citySim.model.cars.Car;
 import com.codecool.citySim.model.lights.CrossRoadLights;
 import com.codecool.citySim.model.roads.Road;
-import javafx.application.Platform;
+import javafx.animation.PathTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CitySimPaneController {
@@ -17,49 +20,36 @@ public class CitySimPaneController {
     private Simulation sim = new Simulation();
     private CrossRoadLights crossRoadLights;
     private LightController lightController;
+    private Road road1 = sim.getFirstRoads()[0];
+    private PathGenerator pathy = new PathGenerator(road1);
 
     public void initialize() {
         crossRoadLights = new CrossRoadLights();
         lightController = new LightController(pane, crossRoadLights);
+        Car car = new Car(road1.getStartX(), road1.getStartY());
+        VehicleController movingCar = new VehicleController(car, road1);
+        pane.getChildren().addAll(car.getImage());
 
-        Thread thread = new Thread(lightController);
-        thread.start();
+        PathTransition pathTransition = new PathTransition(Duration.seconds(3), pathy.newTurn, car.getImage());
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
-        new Thread(() -> {
-            while (true) {
+        pathTransition.setOnFinished(event -> new Thread(() -> {
+            while(true) {
+                System.out.println("Car X Y: " + car.getX() + " " + car.getY() + "\n" +
+                        "CarImg X Y: " + car.getImage().getTranslateX() + " " + car.getImage().getTranslateY() + "\n" +
+                        "CarImg X Y: " + car.getImage().getX() + " " + car.getImage().getY());
+
                 try {
-                    TimeUnit.SECONDS.sleep(1);
-                    carGenerator();
+                    movingCar.moveTheCar();
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                    movingCar.setCarsXY(car);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
-    }
+        }).start());
 
-    private void carGenerator() {
-        Random random = new Random();
+        pathTransition.play();
 
-        if (random.nextInt(100) < 50) {
-            Road road = sim.getFirstRoads()[random.nextInt(4)];
-            Car car = new Car(road.getStartX(), road.getStartY());
-            Platform.runLater(() -> pane.getChildren().addAll(car.getImage()));
-
-            System.out.println("generated: " + car);
-            new Thread(() -> {
-                VehicleController vc = new VehicleController(car, road, crossRoadLights);
-                while (road.getVehicles().indexOf(car) != -1) {
-                    try {
-                        vc.moveTheCar();
-                        TimeUnit.MILLISECONDS.sleep(1000);
-                        vc.setCarsXY(car);
-//                        if (Math.abs(car.getX() - road.getEndX()) < 35 && Math.abs(car.getY() - road.getEndY()) < 35)
-//                            road.getVehicles().remove(car);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
     }
 }

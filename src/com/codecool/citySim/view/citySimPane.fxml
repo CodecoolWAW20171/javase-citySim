@@ -17,6 +17,8 @@
       </Path>
       <QuadCurve fx:id="rightRightTurn" startX="-16" endX="-8" startY="8" endY="16" controlX="-7" controlY="7"
                  styleClass="turn"/>
+      <QuadCurve fx:id="rightLeftTurn" startX="-16" endX="8" startY="8" endY="-16" controlX="7" controlY="7"
+                 styleClass="turn"/>
       <Line fx:id="rightStraight" startX="-16" endX="16" startY="8" endY="8"/>
 
       <Path fx:id="path2">
@@ -31,9 +33,9 @@
                  styleClass="turn"/>
       <Line fx:id="leftStraight" startX="16" endX="-16" startY="-8" endY="-8" />
 
-      <QuadCurve fx:id="upRightTurn" controlX="7" controlY="7" endX="16" endY="8" startX="8" startY="16"
+      <QuadCurve fx:id="upRightTurn" endX="16" endY="8" startX="8" startY="16" controlX="7" controlY="7"
                  styleClass="turn"/>
-      <QuadCurve fx:id="upLeftTurn" controlX="7" controlY="-7" endX="-16" endY="-8" startX="8" startY="16"
+      <QuadCurve fx:id="upLeftTurn" endX="-16" endY="-8" startX="8" startY="16" controlX="7" controlY="-7"
                  styleClass="turn"/>
       <Line fx:id="upStraight" startX="8" endX="8" startY="16" endY="-16" />
 
