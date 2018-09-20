@@ -53,7 +53,7 @@ public class CitySimPaneController {
                 Road road = sim.getFirstRoads()[random.nextInt(4)];
                 Car car = new Car(road.getStartX(), road.getStartY());
                 Platform.runLater(() -> pane.getChildren().add(car.getImage()));
-                VehicleController vc = new VehicleController(car, road);
+                VehicleController vc = new VehicleController(car, road, crossRoadLights);
                 boolean end = false;
 
                 try {
