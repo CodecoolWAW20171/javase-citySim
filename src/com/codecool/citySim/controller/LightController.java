@@ -33,6 +33,12 @@ public class LightController implements Runnable {
                 if (isGreen) {
                     verticalLightRightRect.setFill(Color.GREEN);
                 } else {
+                    verticalLightRightRect.setFill(Color.ORANGE);
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
                     verticalLightRightRect.setFill(Color.RED);
                 }
             }
