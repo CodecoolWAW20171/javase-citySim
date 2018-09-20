@@ -61,9 +61,10 @@ public class CitySimPaneController {
                         vc.setCarsXY(car);
                         TimeUnit.MILLISECONDS.sleep(1000);
 
+                        int distanceToNextTurn = 45;
                         if (!end &&
-                                Math.abs(car.getX() - road.getEndX()) < 45 &&
-                                Math.abs(car.getY() - road.getEndY()) < 45 &&
+                                Math.abs(car.getX() - road.getEndX()) < distanceToNextTurn &&
+                                Math.abs(car.getY() - road.getEndY()) < distanceToNextTurn &&
                                 car.equals(road.getVehicles().getFirst())
                         ) {
                             end = true;
@@ -78,8 +79,9 @@ public class CitySimPaneController {
                             TimeUnit.MILLISECONDS.sleep(1500);
                         }
 
-                        if (end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < 20 &&
-                                Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < 20 &&
+                        int distanceToTheEdgeOfPane = 20;
+                        if (end && Math.abs(car.getX() - vc.getBasicRoad().getEndX()) < distanceToTheEdgeOfPane &&
+                                Math.abs(car.getY() - vc.getBasicRoad().getEndY()) < distanceToTheEdgeOfPane &&
                                 car.equals(vc.getBasicRoad().getVehicles().getFirst())) {
                             vc.getBasicRoad().getVehicles().remove(car);
                             Platform.runLater(() -> pane.getChildren().remove(car.getImage()));

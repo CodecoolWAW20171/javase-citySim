@@ -13,6 +13,7 @@ class VehicleController {
     private double moveOfAxis;
     private boolean axis;
     private boolean isSecondRoad;
+    private double currentSpeed;
     private Vehicle basicCar;
     private Road basicRoad;
     private CrossRoadLights crossRoadLights;
@@ -68,46 +69,30 @@ class VehicleController {
             //check if basicCar is moving in X or Y axis
             if (axis) {
                 //set basicCar speed so that it keeps distance = 2*speed from the crossroad
-                if (isSecondRoad) {
-                    basicCar.setSpeed(getSpeedByAxisDifference(carX + 500, roadEndX));
-                }
                 basicCar.setSpeed(getSpeedByAxisDifference(carX, roadEndX));
             } else {
                 basicCar.setSpeed(getSpeedByAxisDifference(carY, roadEndY));
-                if (isSecondRoad) {
-                    basicCar.setSpeed(getSpeedByAxisDifference(carY + 500, roadEndY));
-                }
             }
         }
 
         //check if basicCar is driving within maximum speed
-        double currentSpeed;
-        if (basicCar.getSpeed() > basicCar.getMaxSpeed()) {
+        currentSpeed = basicCar.getSpeed() > basicCar.getMaxSpeed() ? basicCar.getMaxSpeed() : basicCar.getSpeed();
+        if (isSecondRoad) {
             currentSpeed = basicCar.getMaxSpeed();
-        } else {
-            currentSpeed = basicCar.getSpeed();
-        }
+        } else { checkLights(); }
 
         //check if basicRoad is moving in X or Y axis
         if (axis) {
             //check if basicCar is moving left or right on its axis
             if (roadStartY > 0) {
-                //System.out.println("W prawo verticalLightLeft");
-                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                //System.out.println("W lewo verticalLightRight");
-                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         } else {
             if (roadStartX < 0) {
-                //System.out.println("Do dołu");
-                currentSpeed = checkLights();
                 moveOfAxis = convertSpeedToPixels(currentSpeed);
             } else {
-                //System.out.println("Do góry");
-                currentSpeed = checkLights();
                 moveOfAxis = -convertSpeedToPixels(currentSpeed);
             }
         }
@@ -119,29 +104,18 @@ class VehicleController {
         carImage.startCarImage();
     }
 
-    private double checkLights() {
+    private void checkLights() {
         if (axis) {
-            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 70) {
-                checkTheLight("verticalLightLeft");
-            } else {
-                basicCar.setSpeed(basicCar.getSpeed());
-            }
+            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 70) { checkTheLight("verticalLightLeft"); }
         } else {
-            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 70) {
-                checkTheLight("horizontalLightUp");
-            } else {
-                basicCar.setSpeed(basicCar.getSpeed());
-            }
+            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 70) { checkTheLight("horizontalLightUp"); }
         }
-        return basicCar.getSpeed();
     }
 
     private void checkTheLight(String lightId) {
         Light horizontalLight = crossRoadLights.getLights().get(lightId);
-        if (horizontalLight.isGreen()) {
-            basicCar.setSpeed(basicCar.getSpeed());
-        } else {
-            basicCar.setSpeed(0);
+        if (!horizontalLight.isGreen()) {
+            currentSpeed = 0;
         }
     }
 
