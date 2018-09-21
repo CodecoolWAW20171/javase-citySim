@@ -57,7 +57,7 @@ public class CitySimPaneController {
                 boolean end = false;
 
                 try {
-                    while (car.getImage() != null) {
+                    while (Thread.currentThread().isAlive()) {
                         vc.moveTheCar();
                         vc.setCarsXY(car);
                         TimeUnit.MILLISECONDS.sleep(1000);
