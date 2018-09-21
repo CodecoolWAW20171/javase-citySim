@@ -7,3 +7,9 @@
     -fx-fill: transparent;
     -fx-stroke: #0000005a;
 }
+
+.lights {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+}
