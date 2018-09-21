@@ -106,9 +106,9 @@ class VehicleController {
 
     private void checkLights() {
         if (axis) {
-            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 70) { checkTheLight("verticalLightLeft"); }
+            if (Math.abs(basicRoad.getEndX() - basicCar.getX()) < 60) { checkTheLight("verticalLightLeft"); }
         } else {
-            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 70) { checkTheLight("horizontalLightUp"); }
+            if (Math.abs(basicRoad.getEndY() - basicCar.getY()) < 60) { checkTheLight("horizontalLightUp"); }
         }
     }
 
@@ -128,7 +128,7 @@ class VehicleController {
 
     //calculate distance between objects by their positions in one axis
     private double getSpeedByAxisDifference(double pos1, double pos2) {
-        return Math.abs(pos1 - pos2);
+        return Math.abs(pos1 - pos2) / 2;
     }
 
     //TranslateTransition doesn't save the cars position it has to be saved manually from the game loop

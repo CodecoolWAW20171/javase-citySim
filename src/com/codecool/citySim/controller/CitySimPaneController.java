@@ -19,9 +19,7 @@ public class CitySimPaneController {
     public Pane pane;
     private SoundController soundController = new SoundController();
     private Simulation sim = new Simulation();
-
     private CrossRoadLights crossRoadLights;
-
 
     public void initialize() {
 
